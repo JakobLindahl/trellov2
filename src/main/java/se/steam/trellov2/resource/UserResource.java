@@ -43,7 +43,7 @@ public final class UserResource {
     @PUT
     @Path("{id}")
     public void updateUser(@PathParam("id") UUID id, User user){
-        service.save(new User(id,user.getUsername(),user.getFirstName(),user.getLastName(),user.isActive()));
+        service.update(new User(id,user.getUsername(),user.getFirstName(),user.getLastName(),user.isActive()));
     }
 
     @POST
