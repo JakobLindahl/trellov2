@@ -1,13 +1,18 @@
 package se.steam.trellov2.repository.model;
 
-import se.steam.trellov2.repository.data.AbstractEntity;
-
+import javax.persistence.Entity;
 import java.util.UUID;
 
-public final class TeamEntity extends AbstractEntity {
+@Entity
+public final class TeamEntity  extends AbstractEntity{
 
     private final String name;
     private final boolean active;
+
+    TeamEntity() {
+        this.name = null;
+        this.active = true;
+    }
 
     public TeamEntity(UUID id, String name, boolean active) {
         super(id);
