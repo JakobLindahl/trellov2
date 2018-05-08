@@ -3,6 +3,7 @@ package se.steam.trellov2.service;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.model.User;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface TeamServiceInterface {
@@ -11,7 +12,7 @@ public interface TeamServiceInterface {
 
     Team getTeamById(UUID id);
 
-    Iterable<Team> getAllTeams();
+    List<Team> getAllTeams();
 
     void activateOrDeactivateTeam(Team team);
 
