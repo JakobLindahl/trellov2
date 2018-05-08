@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import static se.steam.trellov2.model.status.IssueStatus.*;
 
-public final class Task extends AbstractDomainModel<Task> {
+public final class Task extends AbstractModel<Task> {
 
     private final String text;
     private final IssueStatus status;
