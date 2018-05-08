@@ -12,7 +12,7 @@ public final class UserEntity extends AbstractEntity {
     @ManyToOne
     private final TeamEntity teamEntity;
 
-    public UserEntity() {
+    UserEntity() {
         this.username = null;
         this.firstName = null;
         this.lastName = null;
