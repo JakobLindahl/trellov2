@@ -1,6 +1,6 @@
 package se.steam.trellov2.service;
 
-public interface TaskService {
+public interface TaskServiceInterface {
 
     Task add(Tast task);
 

@@ -5,7 +5,7 @@ import se.steam.trellov2.model.User;
 import java.util.List;
 import java.util.UUID;
 
-public interface UserService {
+public interface UserServiceInterface {
 
     User get(UUID id);
 
