@@ -1,17 +1,16 @@
 package se.steam.trellov2.repository.data;
 
 import javax.persistence.Entity;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-public final class DUser extends AbstractEntity{
+public final class User extends AbstractEntity{
 
     private final String username, firstName, lastName;
     private final boolean active;
 
 
-    public DUser(UUID id, String username, String firstName, String lastName, boolean active) {
+    public User(UUID id, String username, String firstName, String lastName, boolean active) {
         super(id);
         this.username = username;
         this.firstName = firstName;
