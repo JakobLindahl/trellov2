@@ -13,7 +13,7 @@ public final class IssueEntity extends AbstractEntity {
         this.description = description;
     }
 
-    public String getIssue() {
+    public String getDescription() {
         return description;
     }
 }
