@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public interface TaskService extends Service<Task> {
 
-    Task toggleActive(UUID id);
-
     List<Task> getByUser(UUID userId);
 
     List<Task> getByTeam(UUID teamID);

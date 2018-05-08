@@ -29,8 +29,8 @@ final class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public Team update(Team entity) {
-        return null;
+    public void update(Team entity) {
+
     }
 
     @Override
@@ -39,13 +39,7 @@ final class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public void activateOrDeactivateTeam(Team team) {
-
-    }
-
-    @Override
     public void addUserToTeam(Team team, User user) {
 
     }
-
 }
