@@ -28,7 +28,7 @@ public final class TaskEntity extends AbstractEntity {
         this.teamEntity = null;
     }
 
-    public TaskEntity(UUID id, String text, IssueStatus status) {
+    public TaskEntity(UUID id, String text, TaskStatus status) {
         super(id);
         this.text = text;
         this.status = status;

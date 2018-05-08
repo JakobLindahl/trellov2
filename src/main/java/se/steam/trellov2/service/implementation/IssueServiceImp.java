@@ -28,8 +28,8 @@ final class IssueServiceImp implements IssueService {
     }
 
     @Override
-    public Issue update(Issue entity) {
-        return null;
+    public void update(Issue entity) {
+
     }
 
     @Override
