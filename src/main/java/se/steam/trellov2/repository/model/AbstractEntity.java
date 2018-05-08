@@ -1,4 +1,4 @@
-package se.steam.trellov2.repository.data;
+package se.steam.trellov2.repository.model;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -12,7 +12,11 @@ public abstract class AbstractEntity {
     @Column(columnDefinition = "binary(16)")
     private final UUID id;
 
-    public AbstractEntity(UUID id) {
+    AbstractEntity() {
+        this.id = null;
+    }
+
+    AbstractEntity(UUID id) {
         this.id = id;
     }
 
