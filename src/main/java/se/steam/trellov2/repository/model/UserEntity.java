@@ -9,7 +9,7 @@ public final class UserEntity extends AbstractEntity{
     private final String username, firstName, lastName;
     private final boolean active;
 
-    public UserEntity() {
+    UserEntity() {
         this.username = null;
         this.firstName = null;
         this.lastName = null;

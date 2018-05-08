@@ -5,7 +5,7 @@ import se.steam.trellov2.model.AbstractModel;
 import java.util.List;
 import java.util.UUID;
 
-public interface Service<T extends AbstractModel> {
+public interface Service<T extends AbstractModel<T>> {
 
     T save(T entity);
 
