@@ -2,7 +2,7 @@ package se.steam.trellov2.model;
 
 import java.util.UUID;
 
-public final class Issue extends AbstractDomainModel<Issue> {
+public final class Issue extends AbstractModel<Issue> {
 
     private final String description;
 
