@@ -1,11 +1,16 @@
 package se.steam.trellov2.repository.model;
 
-public class TeamEntity {
+import se.steam.trellov2.repository.data.AbstractEntity;
+
+import java.util.UUID;
+
+public final class TeamEntity  extends AbstractEntity{
 
     private final String name;
     private final boolean active;
 
-    public TeamEntity(String name, boolean active) {
+    public TeamEntity(UUID id, String name, boolean active) {
+        super(id);
         this.name = name;
         this.active = active;
     }
@@ -18,4 +23,7 @@ public class TeamEntity {
         return active;
     }
 
+    public TeamEntity activateOrDeactivateTeam() {
+        return new TeamEntity(getId(), getName(), !isActive());
+    }
 }
