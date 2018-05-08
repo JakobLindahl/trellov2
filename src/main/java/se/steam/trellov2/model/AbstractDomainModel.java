@@ -4,7 +4,7 @@ import java.util.UUID;
 
 abstract class AbstractDomainModel<T extends AbstractDomainModel<T>> {
 
-    private final UUID id;
+    protected final UUID id;
 
     AbstractDomainModel(UUID id) {
         this.id = id;
