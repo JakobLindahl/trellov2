@@ -5,13 +5,7 @@ import se.steam.trellov2.model.User;
 import java.util.List;
 import java.util.UUID;
 
-public interface UserServiceInterface {
-
-    User get(UUID id);
-
-    User add(User user);
-
-    User update(User user, UUID id);
+public interface UserService extends Service<User> {
 
     User toggleActive(UUID id);
 

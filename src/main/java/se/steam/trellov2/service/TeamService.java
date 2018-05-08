@@ -3,32 +3,12 @@ package se.steam.trellov2.service;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.model.User;
 
-import java.util.List;
 import java.util.UUID;
 
-public final class TeamService implements TeamServiceInterface {
-    @Override
-    public Team saveTeam(Team team) {
-        return null;
-    }
+public interface TeamService extends Service<Team> {
 
-    @Override
-    public Team getTeamById(UUID id) {
-        return null;
-    }
+    void activateOrDeactivateTeam(Team team);
 
-    @Override
-    public List<Team> getAllTeams() {
-        return null;
-    }
+    void addUserToTeam(Team team, User user);
 
-    @Override
-    public void activateOrDeactivateTeam(Team team) {
-
-    }
-
-    @Override
-    public void addUserToTeam(Team team, User user) {
-
-    }
 }
