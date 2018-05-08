@@ -3,6 +3,7 @@ package se.steam.trellov2.service;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.model.User;
 
+import java.util.List;
 import java.util.UUID;
 
 public final class TeamService implements TeamServiceInterface {
@@ -17,7 +18,7 @@ public final class TeamService implements TeamServiceInterface {
     }
 
     @Override
-    public Iterable<Team> getAllTeams() {
+    public List<Team> getAllTeams() {
         return null;
     }
 
