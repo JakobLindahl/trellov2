@@ -28,12 +28,12 @@ public final class TaskEntity extends AbstractEntity {
         this.teamEntity = null;
     }
 
-    public TaskEntity(UUID id, String text, TaskStatus status, TeamEntity teamEntity) {
+    public TaskEntity(UUID id, String text, IssueStatus status) {
         super(id);
         this.text = text;
         this.status = status;
         this.userEntity = null;
-        this.teamEntity = teamEntity;
+        this.teamEntity = null;
     }
 
     private TaskEntity(UUID id, String text, TaskStatus status, UserEntity userEntity, TeamEntity teamEntity) {
@@ -61,6 +61,10 @@ public final class TaskEntity extends AbstractEntity {
     }
 
     public TaskEntity setUserEntity(UserEntity userEntity) {
+        return new TaskEntity(getId(), text, status, userEntity, teamEntity);
+    }
+
+    public TaskEntity setTeamEntity(TeamEntity teamEntity) {
         return new TaskEntity(getId(), text, status, userEntity, teamEntity);
     }
 }
