@@ -1,24 +1,22 @@
-package se.steam.trellov2.repository.data;
+package se.steam.trellov2.repository.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.UUID;
 
-@Table
 @Entity
-public final class User extends AbstractEntity{
+public final class UserEntity extends AbstractEntity{
 
     private final String username, firstName, lastName;
     private final boolean active;
 
-    protected User(){
-        username=null;
-        firstName=null;
-        lastName=null;
-        active=false;
+    public UserEntity() {
+        this.username = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.active = true;
     }
 
-    public User(UUID id, String username, String firstName, String lastName, boolean active) {
+    public UserEntity(UUID id, String username, String firstName, String lastName, boolean active) {
         super(id);
         this.username = username;
         this.firstName = firstName;
