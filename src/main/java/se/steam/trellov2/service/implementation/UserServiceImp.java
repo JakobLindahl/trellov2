@@ -28,6 +28,11 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
+    public User update(User entity) {
+        return null;
+    }
+
+    @Override
     public List<User> getAll() {
         return null;
     }

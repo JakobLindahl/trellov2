@@ -29,6 +29,11 @@ final class TeamServiceImp implements TeamService {
     }
 
     @Override
+    public Team update(Team entity) {
+        return null;
+    }
+
+    @Override
     public List<Team> getAll() {
         return null;
     }
