@@ -8,7 +8,7 @@ import java.util.UUID;
 public final class TaskEntity extends AbstractEntity {
 
     private final String text;
-    private Status status;
+    private final Status status;
 
     protected TaskEntity(){
         this.text = null;
