@@ -54,7 +54,7 @@ public final class UserResource {
     @GET
     @Path("{id}/tasks")
     public List<Task> getTasksByUser(@PathParam("id") UUID id){
-
+        return null;
     }
 
 
