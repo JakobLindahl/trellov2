@@ -2,23 +2,22 @@ package se.steam.trellov2.repository.model;
 
 import se.steam.trellov2.model.status.TaskStatus;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Tasks")
 public final class TaskEntity extends AbstractEntity {
 
+    @Column(nullable = false)
     private final String text;
     @Enumerated
+    @Column(nullable = false)
     private final TaskStatus status;
     @ManyToOne
-    @JoinColumn(name = "userEntity")
+    @JoinColumn(name = "User")
     private final UserEntity userEntity;
     @ManyToOne
-    @JoinColumn(name = "teamEntity", nullable = false)
+    @JoinColumn(name = "Team", nullable = false)
     private final TeamEntity teamEntity;
 
     TaskEntity(){

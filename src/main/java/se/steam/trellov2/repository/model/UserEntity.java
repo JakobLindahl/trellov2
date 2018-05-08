@@ -1,15 +1,21 @@
 package se.steam.trellov2.repository.model;
 
+import org.hibernate.annotations.Columns;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Users")
 public final class UserEntity extends AbstractEntity {
 
+    @Column(nullable = false)
     private final String username, firstName, lastName;
     private final boolean active;
     @ManyToOne
+    @JoinColumn(name = "Team")
     private final TeamEntity teamEntity;
 
     UserEntity() {

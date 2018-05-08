@@ -1,11 +1,13 @@
 package se.steam.trellov2.repository.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Teams")
 public final class TeamEntity  extends AbstractEntity{
 
+    @Column(nullable = false)
     private final String name;
     private final boolean active;
 

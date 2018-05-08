@@ -1,17 +1,18 @@
 package se.steam.trellov2.repository.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Issues")
 public final class IssueEntity extends AbstractEntity {
 
+    @Column(nullable = false)
     private final String description;
-
     @ManyToOne
-    @JoinColumn(name = "taskEntity", nullable = false)
+    @JoinColumn(name = "Task", nullable = false)
     private final TaskEntity taskEntity;
 
     IssueEntity() {
