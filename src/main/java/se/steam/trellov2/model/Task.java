@@ -2,15 +2,17 @@ package se.steam.trellov2.model;
 
 import java.util.UUID;
 
+import static se.steam.trellov2.model.Status.*;
+
 public final class Task extends AbstractDomainModel<Task> {
 
     private final String text;
-    private Status status;
+    private final Status status;
 
-    public Task(String text, Status status) {
+    public Task(String text) {
         super(null);
         this.text = text;
-        this.status = status;
+        this.status = UNSTARTED;
     }
 
     public Task(UUID id, String text, Status status) {
@@ -32,4 +34,7 @@ public final class Task extends AbstractDomainModel<Task> {
         return status;
     }
 
+    public Task setStatus(Status status) {
+        return new Task(getId(), text, status);
+    }
 }
