@@ -1,9 +1,10 @@
 package se.steam.trellov2.repository.model;
 
-import se.steam.trellov2.model.status.IssueStatus;
+import se.steam.trellov2.model.status.TaskStatus;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.UUID;
 
@@ -11,21 +12,23 @@ import java.util.UUID;
 public final class TaskEntity extends AbstractEntity {
 
     private final String text;
-    private final IssueStatus status;
+    @Enumerated
+    private final TaskStatus status;
     @ManyToOne
+    @JoinColumn(name = "userEntity")
     private final UserEntity userEntity;
     @ManyToOne
-    @Column (nullable = false)
+    @JoinColumn(name = "teamEntity", nullable = false)
     private final TeamEntity teamEntity;
 
-    protected TaskEntity(){
+    TaskEntity(){
         this.text = null;
         this.status = null;
         this.userEntity = null;
         this.teamEntity = null;
     }
 
-    public TaskEntity(UUID id, String text, IssueStatus status, TeamEntity teamEntity) {
+    public TaskEntity(UUID id, String text, TaskStatus status, TeamEntity teamEntity) {
         super(id);
         this.text = text;
         this.status = status;
@@ -33,7 +36,7 @@ public final class TaskEntity extends AbstractEntity {
         this.teamEntity = teamEntity;
     }
 
-    public TaskEntity(UUID id, String text, IssueStatus status, UserEntity userEntity, TeamEntity teamEntity) {
+    private TaskEntity(UUID id, String text, TaskStatus status, UserEntity userEntity, TeamEntity teamEntity) {
         super(id);
         this.text = text;
         this.status = status;
@@ -45,7 +48,7 @@ public final class TaskEntity extends AbstractEntity {
         return text;
     }
 
-    public IssueStatus getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
