@@ -3,8 +3,10 @@ package se.steam.trellov2.repository.model;
 import se.steam.trellov2.model.Status;
 import se.steam.trellov2.model.Task;
 
+import javax.persistence.Entity;
 import java.util.UUID;
 
+@Entity
 public final class TaskEntity extends AbstractEntity {
 
     private final String text;
