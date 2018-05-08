@@ -13,7 +13,7 @@ public final class Issue extends AbstractDomainModel<Issue> {
 
     @Override
     public Issue assignId() {
-        return new Issue(getId(), getDescription());
+        return new Issue(UUID.randomUUID(), getDescription());
     }
 
     public String getDescription() {
