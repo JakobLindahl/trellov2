@@ -1,8 +1,13 @@
 package se.steam.trellov2.service;
 
-public interface TaskService {
+import se.steam.trellov2.model.Task;
 
-    Task add(Tast task);
+import java.util.List;
+import java.util.UUID;
+
+public interface TaskServiceInterface {
+
+    Task add(Task task);
 
     Task get(UUID id);
 
