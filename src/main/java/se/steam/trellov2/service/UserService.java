@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public interface UserService extends Service<User> {
 
-    User toggleActive(UUID id);
-
     List<User> getByTeam(UUID teamId);
 
 }

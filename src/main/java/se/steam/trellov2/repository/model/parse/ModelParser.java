@@ -28,8 +28,8 @@ public final class ModelParser {
         return new Task(t.getId(), t.getText(), t.getStatus());
     }
 
-    public static TaskEntity toTaskEntity(Task t, TeamEntity team) {
-        return new TaskEntity(t.getId(),t.getText(),t.getStatus(), team);
+    public static TaskEntity toTaskEntity(Task t) {
+        return new TaskEntity(t.getId(), t.getText(), t.getStatus());
     }
 
     public static Team fromTeamEntity(TeamEntity t) {

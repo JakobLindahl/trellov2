@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public interface TeamService extends Service<Team> {
 
-    void activateOrDeactivateTeam(Team team);
-
     void addUserToTeam(Team team, User user);
 
 }
