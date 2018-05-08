@@ -28,6 +28,11 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
+    public Task update(Task entity) {
+        return null;
+    }
+
+    @Override
     public List<Task> getAll() {
         return null;
     }

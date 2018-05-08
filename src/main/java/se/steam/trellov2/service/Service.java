@@ -11,5 +11,7 @@ public interface Service<T extends AbstractModel> {
 
     T get(UUID entityId);
 
+    T update(T entity);
+
     List<T> getAll();
 }
