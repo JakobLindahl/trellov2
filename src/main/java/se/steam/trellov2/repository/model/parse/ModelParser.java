@@ -1,9 +1,13 @@
-package se.steam.trellov2.repository.model;
+package se.steam.trellov2.repository.model.parse;
 
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.model.User;
+import se.steam.trellov2.repository.model.IssueEntity;
+import se.steam.trellov2.repository.model.TaskEntity;
+import se.steam.trellov2.repository.model.TeamEntity;
+import se.steam.trellov2.repository.model.UserEntity;
 
 public class ModelParser {
 

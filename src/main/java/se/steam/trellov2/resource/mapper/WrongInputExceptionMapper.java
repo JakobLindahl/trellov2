@@ -1,6 +1,6 @@
-package se.steam.trellov2.service.exceptions.mappers;
+package se.steam.trellov2.resource.mapper;
 
-import se.steam.trellov2.service.exceptions.WrongInputException;
+import se.steam.trellov2.service.exception.WrongInputException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
