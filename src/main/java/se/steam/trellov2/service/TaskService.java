@@ -5,13 +5,7 @@ import se.steam.trellov2.model.Task;
 import java.util.List;
 import java.util.UUID;
 
-public interface TaskServiceInterface {
-
-    Task add(Task task);
-
-    Task get(UUID id);
-
-    Task update(Task task, UUID id);
+public interface TaskService extends Service<Task> {
 
     Task toggleActive(UUID id);
 

@@ -2,7 +2,7 @@ package se.steam.trellov2.model;
 
 import java.util.UUID;
 
-abstract class AbstractDomainModel<T extends AbstractDomainModel<T>> {
+public abstract class AbstractDomainModel<T extends AbstractDomainModel<T>> {
 
     private final UUID id;
 
