@@ -9,7 +9,7 @@ import se.steam.trellov2.repository.model.TaskEntity;
 import se.steam.trellov2.repository.model.TeamEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 
-public class ModelParser {
+public final class ModelParser {
 
     private ModelParser() {
     }
