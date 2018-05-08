@@ -1,11 +1,14 @@
-package se.steam.trellov2.model;
+package se.steam.trellov2.repository.data;
 
+import javax.persistence.Entity;
 import java.util.UUID;
 
-public final class User extends AbstractDomainModel<User> {
+@Entity
+public final class User extends AbstractEntity{
 
     private final String username, firstName, lastName;
     private final boolean active;
+
 
     public User(UUID id, String username, String firstName, String lastName, boolean active) {
         super(id);
@@ -13,11 +16,6 @@ public final class User extends AbstractDomainModel<User> {
         this.firstName = firstName;
         this.lastName = lastName;
         this.active = active;
-    }
-
-    @Override
-    public User assignId() {
-        return new User(UUID.randomUUID(),username,firstName,lastName, active);
     }
 
     public String getUsername() {
