@@ -10,7 +10,7 @@ public abstract class AbstractEntity {
 
     @Id
     @Column(columnDefinition = "binary(16)")
-    private final UUID id;
+    protected final UUID id;
 
     AbstractEntity() {
         this.id = null;

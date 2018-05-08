@@ -29,6 +29,6 @@ public final class TeamEntity  extends AbstractEntity{
     }
 
     public TeamEntity activateOrDeactivateTeam() {
-        return new TeamEntity(getId(), getName(), !isActive());
+        return new TeamEntity(id, getName(), !isActive());
     }
 }
