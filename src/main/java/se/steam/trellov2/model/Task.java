@@ -35,6 +35,6 @@ public final class Task extends AbstractDomainModel<Task> {
     }
 
     public Task setStatus(Status status) {
-        return new Task(id, text, status);
+        return new Task(getId(), text, status);
     }
 }
