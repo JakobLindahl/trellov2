@@ -7,6 +7,14 @@ public final class User extends AbstractModel<User> {
     private final String username, firstName, lastName;
     private final boolean active;
 
+    protected User(){
+        super(null);
+        username = null;
+        firstName = null;
+        lastName = null;
+        active = true;
+    }
+
     public User(UUID id, String username, String firstName, String lastName, boolean active) {
         super(id);
         this.username = username;

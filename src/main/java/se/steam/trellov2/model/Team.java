@@ -7,6 +7,12 @@ public final class Team extends AbstractModel<Team> {
     private final String name;
     private final boolean active;
 
+    protected Team(){
+        super(null);
+        name=null;
+        active=true;
+    }
+
     public Team(UUID id, String name, boolean active) {
         super(id);
         this.name = name;

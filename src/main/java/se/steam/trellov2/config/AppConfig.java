@@ -11,6 +11,9 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import se.steam.trellov2.resource.TaskResource;
+import se.steam.trellov2.resource.TeamResource;
+import se.steam.trellov2.resource.UserResource;
 import se.steam.trellov2.resource.mapper.DataNotFoundMapper;
 import se.steam.trellov2.resource.mapper.WrongInputExceptionMapper;
 
@@ -30,6 +33,9 @@ public class AppConfig extends ResourceConfig {
         this.packages("se.steam.trellov2.resource");
         register(DataNotFoundMapper.class);
         register(WrongInputExceptionMapper.class);
+        register(TeamResource.class);
+        register(UserResource.class);
+        register(TaskResource.class);
     }
 
     @Bean
