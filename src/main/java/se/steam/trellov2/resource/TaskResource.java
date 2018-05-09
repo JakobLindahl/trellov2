@@ -7,7 +7,7 @@ import se.steam.trellov2.service.TaskService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-
+import java.util.List;
 import java.util.UUID;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -16,20 +16,25 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("tasks")
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
-public class TaskResource {
+public final class TaskResource {
 
-    private final TaskService taskService;
+    private final TaskService service;
 
     @Context
     private UriInfo uriInfo;
 
     private TaskResource(TaskService taskService) {
-        this.taskService = taskService;
+        this.service = taskService;
     }
 
     @PUT
     @Path("{id}")
     public void updateTask(@PathParam("id") UUID id, Task task) {
-        taskService.save(new Task(id,task.getText(),task.getStatus()));
+        service.save(new Task(id, task.getText(), task.getStatus()));
+    }
+
+    @GET
+    public List<Task> getTasksWithIssue() {
+        return service.getWithIssue();
     }
 }

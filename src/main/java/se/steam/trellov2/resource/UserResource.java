@@ -3,6 +3,9 @@ package se.steam.trellov2.resource;
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.User;
+
+import se.steam.trellov2.resource.parameter.UserInput;
+
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.UserService;
 
@@ -31,6 +34,11 @@ public final class UserResource {
         this.userService = userService;
         this.taskService = taskService;
     }
+  
+    @GET
+    public List<User> getUsers(@BeanParam UserInput input) {
+        return uService.getAll(input);
+    }
 
     @GET
     @Path("{id}")
@@ -40,25 +48,30 @@ public final class UserResource {
 
     @PUT
     @Path("{id}")
-    public void updateUser(@PathParam("id") UUID id, User user){
-        userService.update(new User(id,user.getUsername(),user.getFirstName(),user.getLastName(),user.isActive()));
+    public void updateUser(@PathParam("id") UUID id, User user) {
+        userService.update(new User(id, user.getUsername(), user.getFirstName(), user.getLastName(), user.isActive()));
     }
 
     @POST
-    public Response postUser(User user){
+    public Response postUser(User user) {
         return Response.created(uriInfo.getAbsolutePathBuilder().path(userService.save(user).getId().toString()).build()).build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeUser(@PathParam("id") UUID id){
+        userService.remove(id);
     }
 
     @GET
     @Path("{id}/tasks")
-    public List<Task> getTasksByUser(@PathParam("id") UUID userId){
-        return taskService.getByUser(userId);
+    public List<Task> getTasksByUser(@PathParam("id") UUID id) {
+        return taskService.getByUser(id);
     }
 
     @PUT
-    @Path("{userId}/tasks/{taskId}")
-    public void addTaskToUser(@PathParam("userId") UUID userId, @PathParam("taskId") UUID taskId){
-        userService.addTaskToUser(userId, taskId);
+    @Path("{id}/tasks/{taskId}")
+    public void addTaskToUser(@PathParam("id") UUID id, @PathParam("taskId") UUID taskId) {
+        userService.addTask(id, taskId);
     }
-
 }
