@@ -28,8 +28,6 @@ public class AppConfig extends ResourceConfig {
     public AppConfig(Environment environment) {
         this.environment = environment;
         this.packages("se.steam.trellov2.resource");
-        register(DataNotFoundMapper.class);
-        register(WrongInputExceptionMapper.class);
     }
 
     @Bean
