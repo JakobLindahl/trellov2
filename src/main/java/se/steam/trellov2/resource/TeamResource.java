@@ -73,7 +73,7 @@ public final class TeamResource {
     @POST
     @Path("{teamId}/tasks")
     public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task){
-        return Response.ok(taskService.save(teamId, task)).build();
+        return Response.created(getCreatedToDoUri(uriInfo, taskService.save(teamId, task))).build();
     }
 
     @PUT
