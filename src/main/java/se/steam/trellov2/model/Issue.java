@@ -1,11 +1,14 @@
 package se.steam.trellov2.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.UUID;
 
 public final class Issue extends AbstractModel<Issue> {
 
     private final String description;
 
+    @JsonCreator
     public Issue(UUID id, String description) {
         super(id);
         this.description = description;

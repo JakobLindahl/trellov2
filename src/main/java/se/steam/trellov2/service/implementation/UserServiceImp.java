@@ -1,6 +1,7 @@
 package se.steam.trellov2.service.implementation;
 
 import org.springframework.stereotype.Service;
+import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
@@ -50,12 +51,7 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getByTeam(UUID teamId) {
-        return userRepository.findByTeamEntity(teamRepository.findById(teamId)
-                .orElseThrow(() -> new DataNotFoundException("Team not found")))
-                .stream()
-                .map(ModelParser::fromUserEntity)
-                .collect(Collectors.toList());
+    public List<Task> getAllTasksByUser(UUID userId) {
+        return null;
     }
-
 }

@@ -41,13 +41,25 @@ public final class TeamResource {
 
     @PUT
     @Path("{teamId}")
-    public void updateTeam(Team team){
-        teamService.update(team);
+    public void updateTeam(@PathParam("teamId") UUID teamId, Team team){
+        teamService.update(new Team(teamId, team.getName()));
     }
 
     @GET
     public Response getAllTeams(){
         return Response.ok(teamService.getAll()).build();
+    }
+
+    @GET
+    @Path("{teamId}/users")
+    public Response addUserToTeam(@PathParam("teamId") UUID teamId){
+        return Response.ok(teamService.getAllUsersInTeam(teamId)).build();
+    }
+
+    @GET
+    @Path("{teamId}/tasks")
+    public Response getAllTasksInTeam(@PathParam("teamId") UUID teamId){
+        return Response.ok(teamService.getAllTasksInTeam(teamId)).build();
     }
 
     @PUT
