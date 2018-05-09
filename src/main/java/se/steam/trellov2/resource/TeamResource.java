@@ -52,7 +52,7 @@ public final class TeamResource {
 
     @GET
     @Path("{teamId}/users")
-    public Response addUserToTeam(@PathParam("teamId") UUID teamId){
+    public Response getAllUsersInTeam(@PathParam("teamId") UUID teamId){
         return Response.ok(teamService.getAllUsersInTeam(teamId)).build();
     }
 
