@@ -2,6 +2,7 @@ package se.steam.trellov2.resource;
 
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.AbstractModel;
+import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.TeamService;
@@ -49,7 +50,7 @@ public final class TeamResource {
     @PUT
     @Path("{teamId}")
     public void updateTeam(@PathParam("teamId") UUID teamId, Team team){
-        teamService.update(new Team(teamId, team.getName(), team.isActive()));
+        teamService.update(new Team(teamId, team.getName()));
     }
 
     @GET
@@ -67,6 +68,12 @@ public final class TeamResource {
     @Path("{teamId}/tasks")
     public Response getAllTasksByTeam(@PathParam("teamId") UUID teamId){
         return Response.ok(taskService.getByTeam(teamId)).build();
+    }
+
+    @POST
+    @Path("{teamId}/tasks")
+    public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task){
+        return Response.ok(taskService.save(teamId, task)).build();
     }
 
     @PUT
