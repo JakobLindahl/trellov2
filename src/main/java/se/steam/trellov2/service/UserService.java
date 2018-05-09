@@ -9,4 +9,7 @@ public interface UserService extends Service<User> {
 
     List<User> getByTeam(UUID teamId);
 
+    List<User> getWithAttributes(String username, String firstName, String lastName);
+
+    void addTaskToUser(UUID userId, UUID taskId);
 }

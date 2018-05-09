@@ -34,12 +34,18 @@ final class TeamServiceImp implements TeamService {
     }
 
     @Override
+    public void remove(UUID entityId) {
+
+    }
+
+    @Override
+    public void addUserToTeam(UUID teamId, UUID userId) {
+
+    }
+
+    @Override
     public List<Team> getAll() {
         return null;
     }
 
-    @Override
-    public void addUserToTeam(Team team, User user) {
-
-    }
 }

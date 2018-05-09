@@ -2,5 +2,12 @@ package se.steam.trellov2.service;
 
 import se.steam.trellov2.model.Issue;
 
-public interface IssueService extends Service<Issue> {
+import java.util.UUID;
+
+public interface IssueService {
+
+    Issue save(UUID taskId, Issue issue);
+
+    void update(Issue issue);
+
 }
