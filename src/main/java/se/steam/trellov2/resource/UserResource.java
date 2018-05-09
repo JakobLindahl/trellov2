@@ -37,7 +37,7 @@ public final class UserResource {
   
     @GET
     public List<User> getUsers(@BeanParam UserInput input) {
-        return uService.getAll(input);
+        return userService.getWithAttributes(input);
     }
 
     @GET
@@ -72,6 +72,6 @@ public final class UserResource {
     @PUT
     @Path("{id}/tasks/{taskId}")
     public void addTaskToUser(@PathParam("id") UUID id, @PathParam("taskId") UUID taskId) {
-        userService.addTask(id, taskId);
+        userService.addTaskToUser(id, taskId);
     }
 }
