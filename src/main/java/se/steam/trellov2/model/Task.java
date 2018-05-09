@@ -1,16 +1,18 @@
 package se.steam.trellov2.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import se.steam.trellov2.model.status.TaskStatus;
 
 import java.util.UUID;
 
-import static se.steam.trellov2.model.status.TaskStatus.*;
+import static se.steam.trellov2.model.status.TaskStatus.UNSTARTED;
 
 public final class Task extends AbstractModel<Task> {
 
     private final String text;
     private final TaskStatus status;
 
+    @JsonCreator
     public Task(String text) {
         super(null);
         this.text = text;

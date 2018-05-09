@@ -2,6 +2,7 @@ package se.steam.trellov2.service.implementation;
 
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.User;
+import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.parse.ModelParser;
@@ -17,10 +18,12 @@ final class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
+    private final TaskRepository taskRepository;
 
-    private UserServiceImp(UserRepository userRepository, TeamRepository teamRepository) {
+    private UserServiceImp(UserRepository userRepository, TeamRepository teamRepository, TaskRepository taskRepository) {
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -42,11 +45,8 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll()
-                .stream()
-                .map(ModelParser::fromUserEntity)
-                .collect(Collectors.toList());
+    public void remove(UUID entityId) {
+
     }
 
     @Override
@@ -56,6 +56,20 @@ final class UserServiceImp implements UserService {
                 .stream()
                 .map(ModelParser::fromUserEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> getWithAttributes(String username, String firstName, String lastName) {
+        return null;
+    }
+
+    @Override
+    public void addTaskToUser(UUID userId, UUID taskId) {
+        taskRepository.save(taskRepository.findById(taskId)
+                .orElseThrow(RuntimeException::new)
+                .setUserEntity(userRepository.findById(userId)
+                        .orElseThrow(RuntimeException::new))
+        );
     }
 
 }
