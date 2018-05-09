@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity(name = "Tasks")
-public final class TaskEntity extends AbstractEntity {
+public final class TaskEntity extends AbstractEntity<TaskEntity> {
 
     @Column(nullable = false)
     private final String text;
@@ -28,7 +28,15 @@ public final class TaskEntity extends AbstractEntity {
     }
 
     public TaskEntity(UUID id, String text, TaskStatus status) {
-        super(id);
+        super(id, true);
+        this.text = text;
+        this.status = status;
+        this.userEntity = null;
+        this.teamEntity = null;
+    }
+
+    private TaskEntity(UUID id, boolean active, String text, TaskStatus status) {
+        super(id, active);
         this.text = text;
         this.status = status;
         this.userEntity = null;
@@ -36,7 +44,7 @@ public final class TaskEntity extends AbstractEntity {
     }
 
     private TaskEntity(UUID id, String text, TaskStatus status, UserEntity userEntity, TeamEntity teamEntity) {
-        super(id);
+        super(id, true);
         this.text = text;
         this.status = status;
         this.userEntity = userEntity;
@@ -65,5 +73,10 @@ public final class TaskEntity extends AbstractEntity {
 
     public TaskEntity setTeamEntity(TeamEntity teamEntity) {
         return new TaskEntity(getId(), text, status, userEntity, teamEntity);
+    }
+
+    @Override
+    public TaskEntity deactivate() {
+        return new TaskEntity(getId(), isActive(), text, status);
     }
 }

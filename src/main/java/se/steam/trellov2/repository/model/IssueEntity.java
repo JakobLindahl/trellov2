@@ -1,5 +1,7 @@
 package se.steam.trellov2.repository.model;
 
+import se.steam.trellov2.model.Issue;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -7,7 +9,7 @@ import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 @Entity(name = "Issues")
-public final class IssueEntity extends AbstractEntity {
+public final class IssueEntity extends AbstractEntity<IssueEntity> {
 
     @Column(nullable = false)
     private final String description;
@@ -21,13 +23,19 @@ public final class IssueEntity extends AbstractEntity {
     }
 
     public IssueEntity(UUID id, String description) {
-        super(id);
+        super(id, true);
+        this.description = description;
+        this.taskEntity = null;
+    }
+
+    private IssueEntity(UUID id, boolean active, String description) {
+        super(id, active);
         this.description = description;
         this.taskEntity = null;
     }
 
     private IssueEntity(UUID id, String description, TaskEntity taskEntity) {
-        super(id);
+        super(id, true);
         this.description = description;
         this.taskEntity = taskEntity;
     }
@@ -38,5 +46,10 @@ public final class IssueEntity extends AbstractEntity {
 
     public IssueEntity setTaskEnitity(TaskEntity taskEnitity){
         return new IssueEntity(getId(), getDescription(), taskEntity);
+    }
+
+    @Override
+    public IssueEntity deactivate() {
+        return new IssueEntity(getId(), false, description);
     }
 }

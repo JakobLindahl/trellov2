@@ -47,7 +47,9 @@ final class UserServiceImp implements UserService {
 
     @Override
     public void remove(UUID id) {
-        userRepository.findById(id).map(x -> x.)
+        userRepository.save(userRepository.findById(id)
+                .map(x -> x.deactivate())
+                .orElseThrow(() -> new DataNotFoundException("User not found")));
     }
 
     @Override
@@ -60,11 +62,12 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getWithAttributes(final UserInput userInput) {
+    public List<User> getWithAttributes(UserInput userInput) {
         return userRepository.findAll().stream().filter((u) ->
-                u.getFirstName() == null ? true : (u.getFirstName().contains(userInput.getFirstname()) &&
-                u.getLastName() == null ? true : (u.getLastName().contains(userInput.getLastname()) &&
-                u.getUsername() == null ? true : u.getUsername().contains(userInput.getUsername()))))
+                    u.isActive() &&
+                    (u.getFirstName() == null || (u.getFirstName().contains(userInput.getFirstname())) &&
+                    (u.getLastName() == null || (u.getLastName().contains(userInput.getLastname())) &&
+                    (u.getUsername() == null || u.getUsername().contains(userInput.getUsername())))))
                 .map(ModelParser::fromUserEntity)
                 .collect(Collectors.toList());
     }

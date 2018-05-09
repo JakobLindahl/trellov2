@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface UserService extends Service<User> {
 
-    List<Task> getAllTasksByUser(UUID userId);
+    List<User> getByTeam(UUID teamId);
 
     List<User> getWithAttributes(UserInput userInput);
 
