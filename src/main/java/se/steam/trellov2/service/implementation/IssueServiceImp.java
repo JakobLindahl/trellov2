@@ -18,12 +18,7 @@ final class IssueServiceImp implements IssueService {
     }
 
     @Override
-    public Issue save(Issue entity) {
-        return null;
-    }
-
-    @Override
-    public Issue get(UUID entityId) {
+    public Issue save(UUID taskId, Issue issue) {
         return null;
     }
 
@@ -32,8 +27,4 @@ final class IssueServiceImp implements IssueService {
 
     }
 
-    @Override
-    public List<Issue> getAll() {
-        return null;
-    }
 }

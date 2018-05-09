@@ -1,8 +1,11 @@
 package se.steam.trellov2.resource;
 
 import org.springframework.stereotype.Component;
+import se.steam.trellov2.model.AbstractModel;
 import se.steam.trellov2.model.Team;
+import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.TeamService;
+import se.steam.trellov2.service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -21,11 +24,15 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public final class TeamResource {
 
     private final TeamService teamService;
+    private final UserService userService;
+    private final TaskService taskService;
     @Context
     private UriInfo uriInfo;
 
-    public TeamResource(TeamService teamService) {
+    public TeamResource(TeamService teamService, UserService userService, TaskService taskService) {
         this.teamService = teamService;
+        this.userService = userService;
+        this.taskService = taskService;
     }
 
     @POST
@@ -42,7 +49,7 @@ public final class TeamResource {
     @PUT
     @Path("{teamId}")
     public void updateTeam(@PathParam("teamId") UUID teamId, Team team){
-        teamService.update(new Team(teamId, team.getName()));
+        teamService.update(new Team(teamId, team.getName(), team.isActive()));
     }
 
     @GET
@@ -52,14 +59,14 @@ public final class TeamResource {
 
     @GET
     @Path("{teamId}/users")
-    public Response getAllUsersInTeam(@PathParam("teamId") UUID teamId){
-        return Response.ok(teamService.getAllUsersInTeam(teamId)).build();
+    public Response getAllUsersByTeam(@PathParam("teamId") UUID teamId){
+        return Response.ok(userService.getByTeam(teamId)).build();
     }
 
     @GET
     @Path("{teamId}/tasks")
-    public Response getAllTasksInTeam(@PathParam("teamId") UUID teamId){
-        return Response.ok(teamService.getAllTasksInTeam(teamId)).build();
+    public Response getAllTasksByTeam(@PathParam("teamId") UUID teamId){
+        return Response.ok(taskService.getByTeam(teamId)).build();
     }
 
     @PUT
@@ -69,8 +76,8 @@ public final class TeamResource {
         teamService.addUserToTeam(teamId, userId);
     }
 
-    private URI getCreatedToDoUri(UriInfo uriInfo, Team team) {
-        return uriInfo.getAbsolutePathBuilder().path(team.getId().toString()).build();
+    private URI getCreatedToDoUri(UriInfo uriInfo, AbstractModel entity) {
+        return uriInfo.getAbsolutePathBuilder().path(entity.getId().toString()).build();
     }
 
 }

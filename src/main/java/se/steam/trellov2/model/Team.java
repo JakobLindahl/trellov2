@@ -10,8 +10,8 @@ public final class Team extends AbstractModel<Team> {
     private final boolean active;
 
     @JsonCreator
-    public Team(UUID id, String name) {
-        super(id);
+    public Team(String name) {
+        super(null);
         this.name = name;
         this.active = true;
     }
@@ -22,9 +22,10 @@ public final class Team extends AbstractModel<Team> {
         this.active = active;
     }
 
+
     @Override
     public Team assignId() {
-        return new Team(UUID.randomUUID(), getName());
+        return new Team(UUID.randomUUID(), getName(), isActive());
     }
 
     public Team activateOrDeactivateTeam() {

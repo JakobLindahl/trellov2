@@ -5,7 +5,7 @@ import se.steam.trellov2.model.status.TaskStatus;
 
 import java.util.UUID;
 
-import static se.steam.trellov2.model.status.TaskStatus.*;
+import static se.steam.trellov2.model.status.TaskStatus.UNSTARTED;
 
 public final class Task extends AbstractModel<Task> {
 
@@ -13,6 +13,12 @@ public final class Task extends AbstractModel<Task> {
     private final TaskStatus status;
 
     @JsonCreator
+    public Task(String text) {
+        super(null);
+        this.text = text;
+        this.status = UNSTARTED;
+    }
+
     public Task(UUID id, String text, TaskStatus status) {
         super(id);
         this.text = text;

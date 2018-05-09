@@ -10,8 +10,8 @@ public final class User extends AbstractModel<User> {
     private final boolean active;
 
     @JsonCreator
-    public User(UUID id, String username, String firstName, String lastName) {
-        super(id);
+    public User(String username, String firstName, String lastName) {
+        super(null);
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,11 +28,7 @@ public final class User extends AbstractModel<User> {
 
     @Override
     public User assignId() {
-        return new User(UUID.randomUUID(), username, firstName, lastName);
-    }
-
-    public User activateOrDeactivateUser() {
-        return new User(getId(), username, firstName, lastName, !isActive());
+        return new User(UUID.randomUUID(), username, firstName, lastName, active);
     }
 
     public String getUsername() {
