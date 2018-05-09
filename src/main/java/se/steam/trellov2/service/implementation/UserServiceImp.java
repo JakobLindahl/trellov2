@@ -46,8 +46,10 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public void remove(UUID entityId) {
-
+    public void remove(UUID id) {
+        userRepository.save(userRepository.findById(id)
+                .map(x -> x.deactivate())
+                .orElseThrow(() -> new DataNotFoundException("User not found")));
     }
 
     @Override
@@ -61,7 +63,13 @@ final class UserServiceImp implements UserService {
 
     @Override
     public List<User> getWithAttributes(UserInput userInput) {
-        return null;
+        return userRepository.findAll().stream().filter((u) ->
+                    u.isActive() &&
+                    (u.getFirstName() == null || (u.getFirstName().contains(userInput.getFirstname())) &&
+                    (u.getLastName() == null || (u.getLastName().contains(userInput.getLastname())) &&
+                    (u.getUsername() == null || u.getUsername().contains(userInput.getUsername())))))
+                .map(ModelParser::fromUserEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -72,5 +80,4 @@ final class UserServiceImp implements UserService {
                         .orElseThrow(RuntimeException::new))
         );
     }
-
 }
