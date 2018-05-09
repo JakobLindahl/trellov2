@@ -24,13 +24,22 @@ public final class UserEntity extends AbstractEntity<UserEntity> {
         this.teamEntity = null;
     }
 
-    public UserEntity(UUID id, boolean active, String username, String firstName, String lastName) {
+    public UserEntity(UUID id, String username, String firstName, String lastName) {
         super(id, true);
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.teamEntity = null;
     }
+
+    private UserEntity(UUID id, boolean active, String username, String firstName, String lastName) {
+        super(id, active);
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.teamEntity = null;
+    }
+
 
     private UserEntity(UUID id, String username, String firstName, String lastName, TeamEntity teamEntity) {
         super(id, true);

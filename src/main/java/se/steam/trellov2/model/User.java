@@ -7,7 +7,6 @@ import java.util.UUID;
 public final class User extends AbstractModel<User> {
 
     private final String username, firstName, lastName;
-    private final boolean active;
 
     @JsonCreator
     public User(String username, String firstName, String lastName) {
@@ -15,20 +14,18 @@ public final class User extends AbstractModel<User> {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.active = true;
     }
 
-    public User(UUID id, String username, String firstName, String lastName, boolean active) {
+    public User(UUID id, String username, String firstName, String lastName) {
         super(id);
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.active = active;
     }
 
     @Override
     public User assignId() {
-        return new User(UUID.randomUUID(), username, firstName, lastName, active);
+        return new User(UUID.randomUUID(), username, firstName, lastName);
     }
 
     public String getUsername() {
@@ -43,7 +40,4 @@ public final class User extends AbstractModel<User> {
         return lastName;
     }
 
-    public boolean isActive() {
-        return active;
-    }
 }

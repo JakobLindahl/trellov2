@@ -16,12 +16,12 @@ public final class ModelParser {
 
     public static User fromUserEntity(UserEntity u) {
         return new User(u.getId(), u.getUsername(), u.getFirstName(),
-                u.getLastName(), u.isActive());
+                u.getLastName());
     }
 
     public static UserEntity toUserEntity(User u) {
         return new UserEntity(u.getId(), u.getUsername(),
-                u.getFirstName(), u.getLastName(), u.isActive());
+                u.getFirstName(), u.getLastName());
     }
 
     public static Task fromTaskEntity(TaskEntity t) {
@@ -33,11 +33,11 @@ public final class ModelParser {
     }
 
     public static Team fromTeamEntity(TeamEntity t) {
-        return new Team(t.getId(), t.getName(), t.isActive());
+        return new Team(t.getId(), t.getName());
     }
 
     public static TeamEntity toTeamEntity(Team t) {
-        return new TeamEntity(t.getId(), t.getName(), t.isActive());
+        return new TeamEntity(t.getId(), t.getName());
     }
 
     public static Issue fromIssueEntity(IssueEntity i) {
