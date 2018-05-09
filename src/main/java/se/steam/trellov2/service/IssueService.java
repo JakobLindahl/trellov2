@@ -10,4 +10,6 @@ public interface IssueService {
 
     void update(Issue issue);
 
+    void delete(UUID issueId);
+
 }
