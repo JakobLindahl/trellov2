@@ -2,6 +2,7 @@ package se.steam.trellov2.service.implementation;
 
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Task;
+import se.steam.trellov2.model.status.TaskStatus;
 import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.service.TaskService;
 
@@ -32,8 +33,8 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<Task> getAll() {
-        return null;
+    public void remove(UUID entityId) {
+
     }
 
     @Override
@@ -43,6 +44,21 @@ final class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getByTeam(UUID teamID) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getWithIssue() {
+        return null;
+    }
+
+    @Override
+    public List<Task> getByStatus(TaskStatus status) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getByDescription(String description) {
         return null;
     }
 }
