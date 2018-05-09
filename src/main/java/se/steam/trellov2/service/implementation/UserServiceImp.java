@@ -6,6 +6,7 @@ import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.parse.ModelParser;
+import se.steam.trellov2.resource.parameter.UserInput;
 import se.steam.trellov2.service.UserService;
 import se.steam.trellov2.service.exception.DataNotFoundException;
 
@@ -59,7 +60,7 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getWithAttributes(String username, String firstName, String lastName) {
+    public List<User> getWithAttributes(UserInput userInput) {
         return null;
     }
 
