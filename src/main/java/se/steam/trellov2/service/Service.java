@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public interface Service<T extends AbstractModel<T>> {
 
-    T save(T entity);
-
     T get(UUID entityId);
 
     void update(T entity);

@@ -2,6 +2,7 @@ package se.steam.trellov2.service.implementation;
 
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Issue;
+import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.IssueRepository;
 import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.model.IssueEntity;
@@ -31,9 +32,9 @@ final class IssueServiceImp implements IssueService {
     }
 
     @Override
-    public void update(Issue entity) {
-        issueRepository.save(issueRepository.findById(entity.getId())
-                .map(issueEntity -> new IssueEntity(entity.getId(), entity.getDescription()))
+    public void update(Issue issue) {
+        issueRepository.save(issueRepository.findById(issue.getId())
+                .map(issueEntity -> new IssueEntity(issue.getId(), issue.getDescription()))
                 .orElseThrow(() -> new DataNotFoundException("Issue not found")));
     }
 
@@ -42,5 +43,7 @@ final class IssueServiceImp implements IssueService {
         issueRepository.delete(issueRepository.findById(issueId)
                 .orElseThrow(() -> new DataNotFoundException("Issue not found")));
     }
+
+
 
 }
