@@ -26,6 +26,7 @@ public final class TeamResource {
     private final TeamService teamService;
     private final UserService userService;
     private final TaskService taskService;
+
     @Context
     private UriInfo uriInfo;
 
@@ -49,7 +50,7 @@ public final class TeamResource {
     @PUT
     @Path("{teamId}")
     public void updateTeam(@PathParam("teamId") UUID teamId, Team team){
-        teamService.update(new Team(teamId, team.getName(), team.isActive()));
+        teamService.update(new Team(teamId, team.getName()));
     }
 
     @GET
@@ -74,6 +75,12 @@ public final class TeamResource {
     public void addUserToTeam(@PathParam("teamId") UUID teamId,
                               @PathParam("userId") UUID userId){
         teamService.addUserToTeam(teamId, userId);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeTeam(@PathParam("id") UUID id){
+        teamService.remove(id);
     }
 
     private URI getCreatedToDoUri(UriInfo uriInfo, AbstractModel entity) {

@@ -33,4 +33,10 @@ public class IssueResource {
     public void updateIssue(@PathParam("id") UUID id, Issue issue){
         issueService.update(new Issue(id,issue.getDescription()));
     }
+
+    @DELETE
+    @Path("{id}")
+    public void deleteIssue(@PathParam("id") UUID id){
+        issueService.delete(id);
+    }
 }
