@@ -2,6 +2,7 @@ package se.steam.trellov2.resource;
 
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.AbstractModel;
+import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.TeamService;
@@ -68,6 +69,12 @@ public final class TeamResource {
     @Path("{teamId}/tasks")
     public Response getAllTasksByTeam(@PathParam("teamId") UUID teamId){
         return Response.ok(taskService.getByTeam(teamId)).build();
+    }
+
+    @POST
+    @Path("{teamId}/tasks")
+    public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task){
+        return Response.created(getCreatedToDoUri(uriInfo, taskService.save(teamId, task))).build();
     }
 
     @PUT

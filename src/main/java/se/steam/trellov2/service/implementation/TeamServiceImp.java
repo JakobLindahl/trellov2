@@ -32,25 +32,24 @@ final class TeamServiceImp implements TeamService {
 
     @Override
     public Team get(UUID entityId) {
-        return ModelParser.fromTeamEntity(validate(entityId));
+        return ModelParser.fromTeamEntity(validateTeam(entityId));
     }
 
     @Override
     public void update(Team entity) {
-        validate(entity.getId());
+        validateTeam(entity.getId());
         teamRepository.save(ModelParser.toTeamEntity(entity));
 
     }
 
     @Override
     public void remove(UUID entityId) {
-        teamRepository.delete(validate(entityId));
-
+        teamRepository.save(validateTeam(entityId).deactivate());
     }
 
     @Override
     public void addUserToTeam(UUID teamId, UUID userId) {
-        userRepository.save(validateUser(userId).setTeamEntity(validate(teamId)));
+        userRepository.save(validateUser(userId).setTeamEntity(validateTeam(teamId)));
     }
 
     @Override
@@ -61,7 +60,7 @@ final class TeamServiceImp implements TeamService {
                 .collect(Collectors.toList());
     }
 
-    private TeamEntity validate(UUID entityId) {
+    private TeamEntity validateTeam(UUID entityId) {
         return teamRepository.findById(entityId)
                 .orElseThrow(() -> new DataNotFoundException("Team with id [" + entityId + "]"));
     }

@@ -35,7 +35,7 @@ public final class TaskResource {
     @PUT
     @Path("{id}")
     public void updateTask(@PathParam("id") UUID id, Task task) {
-        taskService.save(new Task(id, task.getText(), task.getStatus()));
+        taskService.update(new Task(id, task.getText(), task.getStatus()));
     }
 
     @GET
