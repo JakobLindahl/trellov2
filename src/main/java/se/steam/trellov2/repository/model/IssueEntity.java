@@ -40,11 +40,15 @@ public final class IssueEntity extends AbstractEntity<IssueEntity> {
         this.taskEntity = taskEntity;
     }
 
+    public TaskEntity getTaskEntity() {
+        return taskEntity;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public IssueEntity setTaskEnitity(TaskEntity taskEnitity){
+    public IssueEntity setTaskEnitity(TaskEntity taskEntity){
         return new IssueEntity(getId(), getDescription(), taskEntity);
     }
 

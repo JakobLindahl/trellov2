@@ -25,7 +25,7 @@ final class IssueServiceImp implements IssueService {
     @Override
     public Issue save(UUID taskId, Issue issue) {
         return ModelParser.fromIssueEntity(issueRepository
-                .save(ModelParser.toIssueEntity(issue)
+                .save(ModelParser.toIssueEntity(issue.assignId())
                         .setTaskEnitity(taskRepository.findById(taskId)
                                 .orElseThrow(() -> new DataNotFoundException("task not found")))));
     }
