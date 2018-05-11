@@ -40,7 +40,6 @@ public final class UserEntity extends AbstractEntity<UserEntity> {
         this.teamEntity = null;
     }
 
-
     private UserEntity(UUID id, String username, String firstName, String lastName, TeamEntity teamEntity) {
         super(id, true);
         this.username = username;
