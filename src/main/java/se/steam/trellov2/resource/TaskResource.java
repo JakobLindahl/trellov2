@@ -48,4 +48,10 @@ public final class TaskResource {
     public Response createIssue(@PathParam("id") UUID id, Issue issue){
         return Response.created(uriInfo.getAbsolutePathBuilder().path(issueService.save(id, issue).getId().toString()).build()).build();
     }
+
+    @DELETE
+    @Path("{id}")
+    public void removeTask(@PathParam("id") UUID id){
+        taskService.remove(id);
+    }
 }

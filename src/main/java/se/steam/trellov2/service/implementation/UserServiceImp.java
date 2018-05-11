@@ -5,6 +5,7 @@ import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
+import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.UserInput;
 import se.steam.trellov2.service.UserService;
@@ -13,6 +14,9 @@ import se.steam.trellov2.service.exception.DataNotFoundException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static se.steam.trellov2.repository.model.parse.ModelParser.fromUserEntity;
+import static se.steam.trellov2.repository.model.parse.ModelParser.toUserEntity;
 
 @Service
 final class UserServiceImp implements UserService {
@@ -29,7 +33,7 @@ final class UserServiceImp implements UserService {
 
     @Override
     public User save(User entity) {
-        return ModelParser.fromUserEntity(userRepository.save(ModelParser.toUserEntity(entity.assignId())));
+        return fromUserEntity(userRepository.save(toUserEntity(entity.assignId())));
     }
 
     @Override
@@ -42,13 +46,13 @@ final class UserServiceImp implements UserService {
     @Override
     public void update(User entity) {
         userRepository.findById(entity.getId()).orElseThrow(() -> new DataNotFoundException("User not found"));
-        userRepository.save(ModelParser.toUserEntity(entity));
+        userRepository.save(toUserEntity(entity));
     }
 
     @Override
     public void remove(UUID id) {
         userRepository.save(userRepository.findById(id)
-                .map(x -> x.deactivate())
+                .map(UserEntity::deactivate)
                 .orElseThrow(() -> new DataNotFoundException("User not found")));
     }
 
