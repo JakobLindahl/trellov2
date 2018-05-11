@@ -1,16 +1,20 @@
 package se.steam.trellov2.resource.parameter;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 
 public class UserInput {
 
-    @QueryParam("firstname")
+    @QueryParam("firstName")
+    @DefaultValue("")
     private String firstname;
 
-    @QueryParam("lastname")
+    @QueryParam("lastName")
+    @DefaultValue("")
     private String lastname;
 
-    @QueryParam("userame")
+    @QueryParam("username")
+    @DefaultValue("")
     private String username;
 
     public String getFirstname() {

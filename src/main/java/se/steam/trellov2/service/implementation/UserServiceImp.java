@@ -67,11 +67,12 @@ final class UserServiceImp implements UserService {
 
     @Override
     public List<User> getWithAttributes(UserInput userInput) {
-        return userRepository.findAll().stream().filter((u) ->
+        return userRepository.findAll().stream()
+                .filter((u) ->
                     u.isActive() &&
-                    (u.getFirstName() == null || (u.getFirstName().contains(userInput.getFirstname())) &&
-                    (u.getLastName() == null || (u.getLastName().contains(userInput.getLastname())) &&
-                    (u.getUsername() == null || u.getUsername().contains(userInput.getUsername())))))
+                    (u.getFirstName().contains(userInput.getFirstname()) &&
+                    u.getLastName().contains(userInput.getLastname()) &&
+                    u.getUsername().contains(userInput.getUsername())))
                 .map(ModelParser::fromUserEntity)
                 .collect(Collectors.toList());
     }
