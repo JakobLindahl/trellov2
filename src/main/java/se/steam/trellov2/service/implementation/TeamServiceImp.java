@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static se.steam.trellov2.repository.model.parse.ModelParser.*;
+
 @Service
 final class TeamServiceImp implements TeamService {
 
@@ -26,19 +28,19 @@ final class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public Team save(Team entity) {
-        return ModelParser.fromTeamEntity(teamRepository.save(ModelParser.toTeamEntity(entity.assignId())));
+    public Team save(Team team) {
+        return fromTeamEntity(teamRepository.save(toTeamEntity(team.assignId())));
     }
 
     @Override
     public Team get(UUID entityId) {
-        return ModelParser.fromTeamEntity(validateTeam(entityId));
+        return fromTeamEntity(validateTeam(entityId));
     }
 
     @Override
     public void update(Team entity) {
         validateTeam(entity.getId());
-        teamRepository.save(ModelParser.toTeamEntity(entity));
+        teamRepository.save(toTeamEntity(entity));
 
     }
 

@@ -4,12 +4,11 @@ import se.steam.trellov2.model.Issue;
 
 import java.util.UUID;
 
-public interface IssueService {
+public interface IssueService{
 
     Issue save(UUID taskId, Issue issue);
 
     void update(Issue issue);
 
-    void delete(UUID issueId);
-
+    void delete(UUID IssueId);
 }

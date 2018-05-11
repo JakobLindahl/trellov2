@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static se.steam.trellov2.repository.model.parse.ModelParser.*;
+
 @Service
 final class TaskServiceImp implements TaskService {
 
@@ -37,18 +39,18 @@ final class TaskServiceImp implements TaskService {
 
     @Override
     public Task save(UUID teamId, Task entity) {
-        return ModelParser.fromTaskEntity(taskRepository.save(ModelParser.toTaskEntity(entity.assignId()).setTeamEntity(validateTeam(teamId))));
+        return fromTaskEntity(taskRepository.save(toTaskEntity(entity.assignId()).setTeamEntity(validateTeam(teamId))));
     }
 
     @Override
     public Task get(UUID entityId) {
-        return ModelParser.fromTaskEntity(validateTask(entityId));
+        return fromTaskEntity(validateTask(entityId));
     }
 
     @Override
     public void update(Task entity) {
         validateTask(entity.getId());
-        taskRepository.save(ModelParser.toTaskEntity(entity));
+        taskRepository.save(toTaskEntity(entity));
     }
 
     @Override

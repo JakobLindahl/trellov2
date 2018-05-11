@@ -17,7 +17,7 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
     @JoinColumn(name = "User")
     private final UserEntity userEntity;
     @ManyToOne
-    @JoinColumn(name = "Team", nullable = false)
+    @JoinColumn(name = "Team", nullable = false, updatable = false)
     private final TeamEntity teamEntity;
 
     TaskEntity(){

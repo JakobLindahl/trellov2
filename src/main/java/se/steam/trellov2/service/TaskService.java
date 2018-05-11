@@ -6,15 +6,9 @@ import se.steam.trellov2.model.status.TaskStatus;
 import java.util.List;
 import java.util.UUID;
 
-public interface TaskService {
+public interface TaskService extends Service<Task> {
 
     Task save(UUID teamId,Task entity);
-
-    Task get(UUID entityId);
-
-    void update(Task entity);
-
-    void remove(UUID entityId);
 
     List<Task> getByUser(UUID userId);
 
