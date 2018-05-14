@@ -19,4 +19,6 @@ public interface UserService extends Service<User> {
     void addTaskToUser(UUID userId, UUID taskId);
 
     Page<User> getPage(PagingInput pagingInput);
+
+    void leaveTeam(UUID teamId, UUID userId);
 }

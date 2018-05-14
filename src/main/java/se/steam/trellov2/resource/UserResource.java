@@ -76,7 +76,13 @@ public final class UserResource {
     @PUT
     @Secured
     @Path("{id}/tasks/{taskId}")
-    public void addTaskToUser(@PathParam("id") UUID id, @PathParam("taskId") UUID taskId) {
-        userService.addTaskToUser(id, taskId);
+    public void addTaskToUser(@PathParam("id") UUID userId, @PathParam("taskId") UUID taskId) {
+        userService.addTaskToUser(userId, taskId);
+    }
+
+    @DELETE
+    @Path("{id}/tasks/{taskId}")
+    public void dropTask(@PathParam("id") UUID userId, @PathParam("taskId") UUID taskId) {
+        taskService.dropTask(userId, taskId);
     }
 }

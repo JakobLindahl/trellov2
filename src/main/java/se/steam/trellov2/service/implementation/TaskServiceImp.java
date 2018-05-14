@@ -17,7 +17,9 @@ import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.TaskService;
+import se.steam.trellov2.service.business.Logic;
 import se.steam.trellov2.service.exception.DataNotFoundException;
+import se.steam.trellov2.service.exception.WrongInputException;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,38 +34,40 @@ final class TaskServiceImp implements TaskService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
     private final IssueRepository issueRepository;
+    private final Logic logic;
 
-    private TaskServiceImp(TaskRepository taskRepository, TeamRepository teamRepository, UserRepository userRepository, IssueRepository issueRepository) {
+    private TaskServiceImp(TaskRepository taskRepository, TeamRepository teamRepository, UserRepository userRepository, IssueRepository issueRepository, Logic logic) {
         this.taskRepository = taskRepository;
         this.teamRepository = teamRepository;
         this.userRepository = userRepository;
         this.issueRepository = issueRepository;
+        this.logic = logic;
     }
 
     @Override
     public Task save(UUID teamId, Task entity) {
-        return fromTaskEntity(taskRepository.save(toTaskEntity(entity.assignId()).setTeamEntity(validateTeam(teamId))));
+        return fromTaskEntity(taskRepository.save(toTaskEntity(entity.assignId()).setTeamEntity(logic.validateTeam(teamId))));
     }
 
     @Override
     public Task get(UUID entityId) {
-        return fromTaskEntity(validateTask(entityId));
+        return fromTaskEntity(logic.validateTask(entityId));
     }
 
     @Override
     public void update(Task entity) {
-        validateTask(entity.getId());
+        logic.validateTask(entity.getId());
         taskRepository.save(toTaskEntity(entity));
     }
 
     @Override
     public void remove(UUID entityId) {
-        taskRepository.save(validateTask(entityId).deactivate());
+        taskRepository.save(logic.validateTask(entityId).deactivate());
     }
 
     @Override
     public List<Task> getByUser(UUID userId) {
-        return taskRepository.findByUserEntity(validateUser(userId))
+        return taskRepository.findByUserEntity(logic.validateUser(userId))
                 .stream()
                 .map(ModelParser::fromTaskEntity)
                 .collect(Collectors.toList());
@@ -71,7 +75,7 @@ final class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getByTeam(UUID teamID) {
-        return taskRepository.findByTeamEntity(validateTeam(teamID))
+        return taskRepository.findByTeamEntity(logic.validateTeam(teamID))
                 .stream()
                 .map(ModelParser::fromTaskEntity)
                 .collect(Collectors.toList());
@@ -110,19 +114,13 @@ final class TaskServiceImp implements TaskService {
         return null;
     }
 
-    private TeamEntity validateTeam(UUID entityId) {
-        return teamRepository.findById(entityId)
-                .orElseThrow(() -> new DataNotFoundException("Team with id [" + entityId + "]"));
+    @Override
+    public void dropTask(UUID userId, UUID taskId) {
+        TaskEntity t = logic.validateTask(taskId);
+        if(t.getUserEntity().getId() == userId) {
+            taskRepository.save(t.dropTask());
+        } else {
+            throw new WrongInputException("Task does not belong to User");
+        }
     }
-
-    private UserEntity validateUser(UUID entityId) {
-        return userRepository.findById(entityId)
-                .orElseThrow(() -> new DataNotFoundException("User with id [" + entityId + "]"));
-    }
-
-    private TaskEntity validateTask(UUID entityId) {
-        return taskRepository.findById(entityId)
-                .orElseThrow(() -> new DataNotFoundException("Task with id [" + entityId + "]"));
-    }
-
 }

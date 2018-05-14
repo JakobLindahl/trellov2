@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static se.steam.trellov2.model.status.TaskStatus.*;
+
 @Entity(name = "Tasks")
 public final class TaskEntity extends AbstractEntity<TaskEntity> {
 
@@ -86,6 +88,10 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
 
     public TaskEntity setTeamEntity(TeamEntity teamEntity) {
         return new TaskEntity(getId(), text, status, date, userEntity, teamEntity);
+    }
+
+    public TaskEntity dropTask() {
+        return new TaskEntity(getId(), text, UNSTARTED, LocalDate.now(), null, teamEntity);
     }
 
     @Override
