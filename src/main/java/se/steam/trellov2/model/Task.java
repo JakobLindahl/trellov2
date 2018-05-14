@@ -1,7 +1,6 @@
 package se.steam.trellov2.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.apache.tomcat.jni.Local;
 import se.steam.trellov2.model.status.TaskStatus;
 
 import java.time.LocalDate;
