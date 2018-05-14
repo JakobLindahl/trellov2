@@ -3,6 +3,7 @@ package se.steam.trellov2.resource;
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.Task;
+import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.TaskService;
 
@@ -40,8 +41,8 @@ public final class TaskResource {
     }
 
     @GET
-    public List<Task> getTasks(@BeanParam TaskInput input){
-
+    public List<Task> getTasksByPeriod(@BeanParam TaskInput input){
+        return taskService.getTasksByPeriod(input);
     }
 
     @GET
