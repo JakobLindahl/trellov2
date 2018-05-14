@@ -6,9 +6,9 @@ import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.service.exception.TeamCapacityReachedException;
 import se.steam.trellov2.service.exception.UserBelongingToTeamException;
 
-public final class BussinessLogic {
+public final class BusinessLogic {
 
-    private BussinessLogic() {
+    private BusinessLogic() {
     }
 
     public static TeamEntity checkTeamMaxCap(UserRepository repository, TeamEntity team) {
