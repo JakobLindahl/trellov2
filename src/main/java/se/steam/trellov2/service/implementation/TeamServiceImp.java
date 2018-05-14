@@ -8,7 +8,6 @@ import se.steam.trellov2.repository.model.TeamEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.service.TeamService;
-import se.steam.trellov2.service.businesslogic.BussinessLogic;
 import se.steam.trellov2.service.exception.DataNotFoundException;
 
 import java.util.List;
@@ -16,7 +15,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static se.steam.trellov2.repository.model.parse.ModelParser.*;
-import static se.steam.trellov2.service.businesslogic.BussinessLogic.*;
+import static se.steam.trellov2.service.business.Logic.checkTeamMaxCap;
+import static se.steam.trellov2.service.business.Logic.checkUserTeamAvailability;
 
 @Service
 final class TeamServiceImp implements TeamService {
