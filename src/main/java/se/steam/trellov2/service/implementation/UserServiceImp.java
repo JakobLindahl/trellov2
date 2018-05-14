@@ -5,6 +5,7 @@ import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
+import se.steam.trellov2.repository.model.TaskEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.UserInput;
@@ -83,10 +84,12 @@ final class UserServiceImp implements UserService {
 
     @Override
     public void addTaskToUser(UUID userId, UUID taskId) {
-        taskRepository.save(taskRepository.findById(taskId)
-                .orElseThrow(RuntimeException::new)
-                .setUserEntity(userRepository.findById(userId)
-                        .orElseThrow(RuntimeException::new))
-        );
+        UserEntity u = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
+        TaskEntity t = taskRepository.findById(taskId).orElseThrow(() -> new DataNotFoundException("User not found"));
+        
+//        taskRepository.save(taskRepository.findById(taskId)
+//                .map(t -> t.setUserEntity(userRepository.findById(userId)
+//                        .orElseThrow(RuntimeException::new)))
+//                .orElseThrow(RuntimeException::new));
     }
 }

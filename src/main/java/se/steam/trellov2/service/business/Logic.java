@@ -42,6 +42,16 @@ public final class Logic {
         return user;
     }
 
+    public
+
+    private <T extends AbstractEntity> T checkIfActive(T entity) {
+        if(entity.isActive()) {
+            return entity;
+        }
+        throw new InactiveEntityException("Inactive " +
+                entity.getClass().getSimpleName().replace("Entity", ""));
+    }
+
     public TeamEntity validateTeam(UUID entityId) {
         return teamRepository.findById(entityId)
                 .map(this::checkIfActive)
@@ -53,13 +63,4 @@ public final class Logic {
                 .map(this::checkIfActive)
                 .orElseThrow(() -> new DataNotFoundException("User with id [" + entityId + "] not found"));
     }
-
-    private <T extends AbstractEntity> T checkIfActive(T entity) {
-        if(entity.isActive()) {
-            return entity;
-        }
-        throw new InactiveEntityException("Inactive " +
-                entity.getClass().getSimpleName().replace("Entity", ""));
-    }
-
 }
