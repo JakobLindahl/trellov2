@@ -1,5 +1,6 @@
 package se.steam.trellov2.service.implementation;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.Task;
@@ -13,6 +14,7 @@ import se.steam.trellov2.repository.model.TaskEntity;
 import se.steam.trellov2.repository.model.TeamEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
+import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.exception.DataNotFoundException;
 
@@ -95,6 +97,11 @@ final class TaskServiceImp implements TaskService {
                 .filter(t -> t.getText().contains(description))
                 .map(ModelParser::fromTaskEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<Task> getPage(PagingInput pagingInput) {
+        return null;
     }
 
     private TeamEntity validateTeam(UUID entityId) {

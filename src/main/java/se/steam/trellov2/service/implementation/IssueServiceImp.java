@@ -1,5 +1,6 @@
 package se.steam.trellov2.service.implementation;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.User;
@@ -7,6 +8,7 @@ import se.steam.trellov2.repository.IssueRepository;
 import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.model.IssueEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
+import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.exception.DataNotFoundException;
 
@@ -44,6 +46,10 @@ final class IssueServiceImp implements IssueService {
                 .orElseThrow(() -> new DataNotFoundException("Issue not found")));
     }
 
+    @Override
+    public Page<Issue> getPage(PagingInput pagingInput) {
+        return null;
+    }
 
 
 }
