@@ -1,5 +1,6 @@
 package se.steam.trellov2.service.implementation;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
@@ -8,6 +9,7 @@ import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.TaskEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
+import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.UserInput;
 import se.steam.trellov2.service.UserService;
 import se.steam.trellov2.service.business.Logic;
@@ -75,8 +77,8 @@ final class UserServiceImp implements UserService {
         return userRepository.findAll().stream()
                 .filter((u) ->
                     u.isActive() &&
-                    (u.getFirstName().contains(userInput.getFirstname()) &&
-                    u.getLastName().contains(userInput.getLastname()) &&
+                    (u.getFirstName().contains(userInput.getFirstName()) &&
+                    u.getLastName().contains(userInput.getLastName()) &&
                     u.getUsername().contains(userInput.getUsername())))
                 .map(ModelParser::fromUserEntity)
                 .collect(Collectors.toList());
@@ -91,5 +93,10 @@ final class UserServiceImp implements UserService {
 //                .map(t -> t.setUserEntity(userRepository.findById(userId)
 //                        .orElseThrow(RuntimeException::new)))
 //                .orElseThrow(RuntimeException::new));
+    }
+
+    @Override
+    public Page<User> getPage(PagingInput pagingInput) {
+        return null;
     }
 }

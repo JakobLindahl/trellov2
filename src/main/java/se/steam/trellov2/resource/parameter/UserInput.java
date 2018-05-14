@@ -17,11 +17,11 @@ public class UserInput {
     @DefaultValue("")
     private String username;
 
-    public String getFirstname() {
+    public String getFirstName() {
         return firstname;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return lastname;
     }
 

@@ -25,11 +25,11 @@ public final class ModelParser {
     }
 
     public static Task fromTaskEntity(TaskEntity t) {
-        return new Task(t.getId(), t.getText(), t.getStatus());
+        return new Task(t.getId(), t.getText(), t.getStatus(), t.getDate());
     }
 
     public static TaskEntity toTaskEntity(Task t) {
-        return new TaskEntity(t.getId(), t.getText(), t.getStatus());
+        return new TaskEntity(t.getId(), t.getText(), t.getStatus(), t.getDate());
     }
 
     public static Team fromTeamEntity(TeamEntity t) {
