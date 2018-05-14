@@ -7,6 +7,7 @@ import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.TaskEntity;
+import se.steam.trellov2.repository.model.TeamEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
@@ -14,6 +15,7 @@ import se.steam.trellov2.resource.parameter.UserInput;
 import se.steam.trellov2.service.UserService;
 import se.steam.trellov2.service.business.Logic;
 import se.steam.trellov2.service.exception.DataNotFoundException;
+import se.steam.trellov2.service.exception.WrongInputException;
 
 import java.util.List;
 import java.util.UUID;
@@ -43,30 +45,27 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public User get(UUID entityId) {
-        return userRepository.findById(entityId)
-                .map(ModelParser::fromUserEntity)
-                .orElseThrow(() -> new DataNotFoundException("User not found"));
+    public User get(UUID userId) {
+        return fromUserEntity(logic.validateUser(userId));
     }
 
     @Override
     public void update(User user) {
-        userRepository.findById(user.getId()).orElseThrow(() -> new DataNotFoundException("User not found"));
+        logic.validateUser(user.getId());
         userRepository.save(toUserEntity(user));
     }
 
     @Override
-    public void remove(UUID id) {
-        taskRepository.findByUserEntity(userRepository.save(userRepository.findById(id)
-                .map(UserEntity::deactivate)
-                .orElseThrow(() -> new DataNotFoundException("User not found"))))
-        .stream().map(x -> x).forEach(taskRepository::save);
+    public void remove(UUID userId) {
+        taskRepository.findByUserEntity(
+                userRepository.save(logic.validateUser(userId).deactivate())).stream()
+                .map(TaskEntity::dropTask)
+                .forEach(taskRepository::save);
     }
 
     @Override
     public List<User> getByTeam(UUID teamId) {
-        return userRepository.findByTeamEntity(teamRepository.findById(teamId)
-                .orElseThrow(() -> new DataNotFoundException("Team not found")))
+        return userRepository.findByTeamEntity(logic.validateTeam(teamId))
                 .stream()
                 .map(ModelParser::fromUserEntity)
                 .collect(Collectors.toList());
@@ -86,17 +85,26 @@ final class UserServiceImp implements UserService {
 
     @Override
     public void addTaskToUser(UUID userId, UUID taskId) {
-        UserEntity u = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
-        TaskEntity t = taskRepository.findById(taskId).orElseThrow(() -> new DataNotFoundException("User not found"));
-        
-//        taskRepository.save(taskRepository.findById(taskId)
-//                .map(t -> t.setUserEntity(userRepository.findById(userId)
-//                        .orElseThrow(RuntimeException::new)))
-//                .orElseThrow(RuntimeException::new));
+        taskRepository.save(
+                logic.checkIfSameTeam(
+                        logic.checkUserCapacity(logic.validateUser(userId)),
+                        logic.checkIfTaskIsTaken(logic.validateTask(taskId))
+                )
+        );
     }
 
     @Override
     public Page<User> getPage(PagingInput pagingInput) {
         return null;
+    }
+
+    @Override
+    public void leaveTeam(UUID teamId, UUID userId) {
+        UserEntity u = logic.validateUser(userId);
+        if(u.getTeamEntity().getId() == teamId) {
+            userRepository.save(u.leaveTeam());
+        } else {
+            throw new WrongInputException("User does not belong to requested Team");
+        }
     }
 }

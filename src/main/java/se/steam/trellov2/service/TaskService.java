@@ -26,4 +26,6 @@ public interface TaskService extends Service<Task> {
     Page<Task> getPage(PagingInput pagingInput);
 
     List<Task> getTasksByPeriod(TaskInput taskInput);
+
+    void dropTask(UUID userId, UUID taskId);
 }

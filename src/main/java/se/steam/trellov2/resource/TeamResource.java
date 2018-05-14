@@ -85,6 +85,13 @@ public final class TeamResource {
     }
 
     @DELETE
+    @Path("{teamId}/users/{userId}")
+    public void leaveTeam(@PathParam("teamId") UUID teamId,
+                          @PathParam("userId") UUID userId) {
+        userService.leaveTeam(teamId, userId);
+    }
+
+    @DELETE
     @Path("{id}")
     public void removeTeam(@PathParam("id") UUID id){
         teamService.remove(id);
