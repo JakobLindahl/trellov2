@@ -1,40 +1,50 @@
 package se.steam.trellov2.repository.model;
 
-import se.steam.trellov2.model.Status;
+import se.steam.trellov2.model.status.TaskStatus;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
-public final class TaskEntity extends AbstractEntity {
+@Entity(name = "Tasks")
+public final class TaskEntity extends AbstractEntity<TaskEntity> {
 
+    @Column(nullable = false)
     private final String text;
-    private final Status status;
+    @Enumerated
+    @Column(nullable = false)
+    private final TaskStatus status;
     @ManyToOne
+    @JoinColumn(name = "User")
     private final UserEntity userEntity;
     @ManyToOne
-    @Column (nullable = false)
+    @JoinColumn(name = "Team", nullable = false, updatable = false)
     private final TeamEntity teamEntity;
 
-    protected TaskEntity(){
+    TaskEntity(){
         this.text = null;
         this.status = null;
         this.userEntity = null;
         this.teamEntity = null;
     }
 
-    public TaskEntity(UUID id, String text, Status status, TeamEntity teamEntity) {
-        super(id);
+    public TaskEntity(UUID id, String text, TaskStatus status) {
+        super(id, true);
         this.text = text;
         this.status = status;
         this.userEntity = null;
-        this.teamEntity = teamEntity;
+        this.teamEntity = null;
     }
 
-    public TaskEntity(UUID id, String text, Status status, UserEntity userEntity, TeamEntity teamEntity) {
-        super(id);
+    private TaskEntity(UUID id, boolean active, String text, TaskStatus status) {
+        super(id, active);
+        this.text = text;
+        this.status = status;
+        this.userEntity = null;
+        this.teamEntity = null;
+    }
+
+    private TaskEntity(UUID id, String text, TaskStatus status, UserEntity userEntity, TeamEntity teamEntity) {
+        super(id, true);
         this.text = text;
         this.status = status;
         this.userEntity = userEntity;
@@ -45,7 +55,7 @@ public final class TaskEntity extends AbstractEntity {
         return text;
     }
 
-    public Status getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
@@ -59,5 +69,14 @@ public final class TaskEntity extends AbstractEntity {
 
     public TaskEntity setUserEntity(UserEntity userEntity) {
         return new TaskEntity(getId(), text, status, userEntity, teamEntity);
+    }
+
+    public TaskEntity setTeamEntity(TeamEntity teamEntity) {
+        return new TaskEntity(getId(), text, status, userEntity, teamEntity);
+    }
+
+    @Override
+    public TaskEntity deactivate() {
+        return new TaskEntity(getId(), isActive(), text, status);
     }
 }

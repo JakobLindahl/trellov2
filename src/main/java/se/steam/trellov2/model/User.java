@@ -1,23 +1,31 @@
 package se.steam.trellov2.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.UUID;
 
-public final class User extends AbstractDomainModel<User> {
+public final class User extends AbstractModel<User> {
 
     private final String username, firstName, lastName;
-    private final boolean active;
 
-    public User(UUID id, String username, String firstName, String lastName, boolean active) {
+    @JsonCreator
+    public User(String username, String firstName, String lastName) {
+        super(null);
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(UUID id, String username, String firstName, String lastName) {
         super(id);
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.active = active;
     }
 
     @Override
     public User assignId() {
-        return new User(UUID.randomUUID(),username,firstName,lastName, active);
+        return new User(UUID.randomUUID(), username, firstName, lastName);
     }
 
     public String getUsername() {
@@ -32,7 +40,4 @@ public final class User extends AbstractDomainModel<User> {
         return lastName;
     }
 
-    public boolean isActive() {
-        return active;
-    }
 }

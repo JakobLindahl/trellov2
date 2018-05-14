@@ -1,34 +1,35 @@
 package se.steam.trellov2.repository.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.UUID;
 
-@Entity
-public final class TeamEntity  extends AbstractEntity{
+@Entity(name = "Teams")
+public final class TeamEntity  extends AbstractEntity<TeamEntity>{
 
+    @Column(nullable = false)
     private final String name;
-    private final boolean active;
 
     TeamEntity() {
         this.name = null;
-        this.active = true;
     }
 
-    public TeamEntity(UUID id, String name, boolean active) {
-        super(id);
+    public TeamEntity(UUID id, String name) {
+        super(id, true);
         this.name = name;
-        this.active = active;
+    }
+
+    private TeamEntity(UUID id, boolean active, String name) {
+        super(id, active);
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public TeamEntity activateOrDeactivateTeam() {
-        return new TeamEntity(getId(), name, !isActive());
+    @Override
+    public TeamEntity deactivate() {
+        return new TeamEntity(getId(), false, name);
     }
 }
