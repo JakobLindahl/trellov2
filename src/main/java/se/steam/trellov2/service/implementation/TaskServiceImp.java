@@ -15,6 +15,7 @@ import se.steam.trellov2.repository.model.TeamEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
+import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.exception.DataNotFoundException;
 
@@ -101,6 +102,11 @@ final class TaskServiceImp implements TaskService {
 
     @Override
     public Page<Task> getPage(PagingInput pagingInput) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getTasksByPeriod(TaskInput taskInput) {
         return null;
     }
 
