@@ -15,6 +15,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static se.steam.trellov2.repository.model.parse.ModelParser.*;
+import static se.steam.trellov2.service.business.Logic.checkTeamMaxCap;
+import static se.steam.trellov2.service.business.Logic.checkUserTeamAvailability;
 
 @Service
 final class TeamServiceImp implements TeamService {
@@ -41,7 +43,6 @@ final class TeamServiceImp implements TeamService {
     public void update(Team entity) {
         validateTeam(entity.getId());
         teamRepository.save(toTeamEntity(entity));
-
     }
 
     @Override
@@ -51,7 +52,8 @@ final class TeamServiceImp implements TeamService {
 
     @Override
     public void addUserToTeam(UUID teamId, UUID userId) {
-        userRepository.save(validateUser(userId).setTeamEntity(validateTeam(teamId)));
+        userRepository.save(checkUserTeamAvailability(validateUser(userId))
+                .setTeamEntity(checkTeamMaxCap(userRepository, validateTeam(teamId))));
     }
 
     @Override
@@ -66,6 +68,7 @@ final class TeamServiceImp implements TeamService {
         return teamRepository.findById(entityId)
                 .orElseThrow(() -> new DataNotFoundException("Team with id [" + entityId + "]"));
     }
+
     private UserEntity validateUser(UUID entityId) {
         return userRepository.findById(entityId)
                 .orElseThrow(() -> new DataNotFoundException("User with id [" + entityId + "]"));
