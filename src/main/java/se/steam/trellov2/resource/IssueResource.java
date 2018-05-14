@@ -17,7 +17,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("issues")
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
-public class IssueResource {
+public final class IssueResource {
 
     private final IssueService issueService;
 
