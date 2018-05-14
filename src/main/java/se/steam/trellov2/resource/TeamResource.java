@@ -91,6 +91,14 @@ public final class TeamResource {
 
     @DELETE
     @Secured
+    @Path("{teamId}/users/{userId}")
+    public void leaveTeam(@PathParam("teamId") UUID teamId,
+                          @PathParam("userId") UUID userId) {
+        userService.leaveTeam(teamId, userId);
+    }
+
+    @DELETE
+    @Secured
     @Path("{id}")
     public void removeTeam(@PathParam("id") UUID id){
         teamService.remove(id);

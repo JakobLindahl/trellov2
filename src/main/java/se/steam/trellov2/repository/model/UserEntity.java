@@ -65,6 +65,10 @@ public final class UserEntity extends AbstractEntity<UserEntity> {
         return new UserEntity(getId(), false, username, firstName, lastName);
     }
 
+    public UserEntity leaveTeam() {
+        return new UserEntity(getId(), username, firstName, lastName);
+    }
+
     public UserEntity setTeamEntity(TeamEntity teamEntity) {
         return new UserEntity(getId(), username, firstName,
                 lastName, teamEntity);
