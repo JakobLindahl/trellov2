@@ -31,8 +31,6 @@ public final class SecurityFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext request) {
-        System.out.println(environment.getProperty("trellov2.authtoken"));
-        System.out.println(request.getHeaderString("key"));
         if (!environment.getProperty("trellov2.authtoken").equalsIgnoreCase(request.getHeaderString("key")))
             request.abortWith(status(UNAUTHORIZED)
                     .entity(singletonMap("Error 401", "Missing/Invalid api key"))
