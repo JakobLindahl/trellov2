@@ -9,6 +9,7 @@ import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.UserInput;
 import se.steam.trellov2.service.UserService;
+import se.steam.trellov2.service.business.Logic;
 import se.steam.trellov2.service.exception.DataNotFoundException;
 
 import java.util.List;
@@ -24,16 +25,18 @@ final class UserServiceImp implements UserService {
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
     private final TaskRepository taskRepository;
+    private final Logic logic;
 
-    private UserServiceImp(UserRepository userRepository, TeamRepository teamRepository, TaskRepository taskRepository) {
+    private UserServiceImp(UserRepository userRepository, TeamRepository teamRepository, TaskRepository taskRepository, Logic logic) {
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
         this.taskRepository = taskRepository;
+        this.logic = logic;
     }
 
     @Override
-    public User save(User entity) {
-        return fromUserEntity(userRepository.save(toUserEntity(entity.assignId())));
+    public User save(User user) {
+        return fromUserEntity(userRepository.save(toUserEntity(logic.validateUsername(user).assignId())));
     }
 
     @Override
@@ -44,16 +47,17 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public void update(User entity) {
-        userRepository.findById(entity.getId()).orElseThrow(() -> new DataNotFoundException("User not found"));
-        userRepository.save(toUserEntity(entity));
+    public void update(User user) {
+        userRepository.findById(user.getId()).orElseThrow(() -> new DataNotFoundException("User not found"));
+        userRepository.save(toUserEntity(user));
     }
 
     @Override
     public void remove(UUID id) {
-        userRepository.save(userRepository.findById(id)
+        taskRepository.findByUserEntity(userRepository.save(userRepository.findById(id)
                 .map(UserEntity::deactivate)
-                .orElseThrow(() -> new DataNotFoundException("User not found")));
+                .orElseThrow(() -> new DataNotFoundException("User not found"))))
+        .stream().map(x -> x).forEach(taskRepository::save);
     }
 
     @Override

@@ -14,6 +14,7 @@ import se.steam.trellov2.repository.model.TeamEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.service.TaskService;
+import se.steam.trellov2.service.business.Logic;
 import se.steam.trellov2.service.exception.DataNotFoundException;
 
 import java.util.List;
@@ -29,12 +30,14 @@ final class TaskServiceImp implements TaskService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
     private final IssueRepository issueRepository;
+    private final Logic logic;
 
-    private TaskServiceImp(TaskRepository taskRepository, TeamRepository teamRepository, UserRepository userRepository, IssueRepository issueRepository) {
+    private TaskServiceImp(TaskRepository taskRepository, TeamRepository teamRepository, UserRepository userRepository, IssueRepository issueRepository, Logic logic) {
         this.taskRepository = taskRepository;
         this.teamRepository = teamRepository;
         this.userRepository = userRepository;
         this.issueRepository = issueRepository;
+        this.logic = logic;
     }
 
     @Override
