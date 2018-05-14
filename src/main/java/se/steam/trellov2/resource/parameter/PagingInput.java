@@ -1,34 +1,22 @@
 package se.steam.trellov2.resource.parameter;
 
-import se.steam.trellov2.model.status.TaskStatus;
-
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
-import java.time.LocalDate;
 
 public class PagingInput {
 
-    @QueryParam("startDate")
-    @DefaultValue("currentMonth")
-    private LocalDate startDate;
+    @QueryParam("page")
+    @DefaultValue("1")
+    private int page;
+    @QueryParam("size")
+    @DefaultValue("5")
+    private int size;
 
-    @QueryParam("endDate")
-    @DefaultValue("today")
-    private LocalDate endDate;
-
-    @QueryParam("status")
-    @DefaultValue("Done")
-    private TaskStatus status;
-
-    public LocalDate getStartDate() {
-        return startDate;
+    public int getPage() {
+        return page;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public TaskStatus getStatus() {
-        return status;
+    public int getSize() {
+        return size;
     }
 }
