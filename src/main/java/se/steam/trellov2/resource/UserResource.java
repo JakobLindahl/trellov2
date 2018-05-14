@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.User;
 
+import se.steam.trellov2.resource.mapper.Secured;
 import se.steam.trellov2.resource.parameter.UserInput;
 
 import se.steam.trellov2.service.TaskService;
@@ -47,17 +48,20 @@ public final class UserResource {
     }
 
     @PUT
+    @Secured
     @Path("{id}")
     public void updateUser(@PathParam("id") UUID id, User user) {
         userService.update(new User(id, user.getUsername(), user.getFirstName(), user.getLastName()));
     }
 
     @POST
+    @Secured
     public Response postUser(User user) {
         return Response.created(uriInfo.getAbsolutePathBuilder().path(userService.save(user).getId().toString()).build()).build();
     }
 
     @DELETE
+    @Secured
     @Path("{id}")
     public void removeUser(@PathParam("id") UUID id){
         userService.remove(id);
@@ -70,6 +74,7 @@ public final class UserResource {
     }
 
     @PUT
+    @Secured
     @Path("{id}/tasks/{taskId}")
     public void addTaskToUser(@PathParam("id") UUID userId, @PathParam("taskId") UUID taskId) {
         userService.addTaskToUser(userId, taskId);

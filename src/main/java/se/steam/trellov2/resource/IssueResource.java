@@ -2,6 +2,7 @@ package se.steam.trellov2.resource;
 
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.Issue;
+import se.steam.trellov2.resource.mapper.Secured;
 import se.steam.trellov2.service.IssueService;
 
 import javax.ws.rs.*;
@@ -29,12 +30,14 @@ public final class IssueResource {
     }
 
     @PUT
+    @Secured
     @Path("{id}")
     public void updateIssue(@PathParam("id") UUID id, Issue issue){
         issueService.update(new Issue(id,issue.getDescription()));
     }
 
     @DELETE
+    @Secured
     @Path("{id}")
     public void deleteIssue(@PathParam("id") UUID id){
         issueService.delete(id);

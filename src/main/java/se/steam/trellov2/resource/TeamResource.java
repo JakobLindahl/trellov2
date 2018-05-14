@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.AbstractModel;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.Team;
+import se.steam.trellov2.resource.mapper.Secured;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.TeamService;
 import se.steam.trellov2.service.UserService;
@@ -38,6 +39,7 @@ public final class TeamResource {
     }
 
     @POST
+    @Secured
     public Response createTeam(Team team){
         return Response.created(getCreatedToDoUri(uriInfo, teamService.save(team))).build();
     }
@@ -49,6 +51,7 @@ public final class TeamResource {
     }
 
     @PUT
+    @Secured
     @Path("{teamId}")
     public void updateTeam(@PathParam("teamId") UUID teamId, Team team){
         teamService.update(new Team(teamId, team.getName()));
@@ -72,12 +75,14 @@ public final class TeamResource {
     }
 
     @POST
+    @Secured
     @Path("{teamId}/tasks")
     public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task){
         return Response.created(getCreatedToDoUri(uriInfo, taskService.save(teamId, task))).build();
     }
 
     @PUT
+    @Secured
     @Path("{teamId}/users/{userId}")
     public void addUserToTeam(@PathParam("teamId") UUID teamId,
                               @PathParam("userId") UUID userId){
@@ -85,6 +90,7 @@ public final class TeamResource {
     }
 
     @DELETE
+    @Secured
     @Path("{teamId}/users/{userId}")
     public void leaveTeam(@PathParam("teamId") UUID teamId,
                           @PathParam("userId") UUID userId) {
@@ -92,6 +98,7 @@ public final class TeamResource {
     }
 
     @DELETE
+    @Secured
     @Path("{id}")
     public void removeTeam(@PathParam("id") UUID id){
         teamService.remove(id);
