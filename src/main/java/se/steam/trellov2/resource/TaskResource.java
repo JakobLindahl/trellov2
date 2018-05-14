@@ -6,6 +6,7 @@ import se.steam.trellov2.model.Task;
 import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.TaskService;
 
+import javax.persistence.GeneratedValue;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -35,7 +36,12 @@ public final class TaskResource {
     @PUT
     @Path("{id}")
     public void updateTask(@PathParam("id") UUID id, Task task) {
-        taskService.update(new Task(id, task.getText(), task.getStatus()));
+        taskService.update(new Task(id, task.getText(), task.getStatus(), task.getDate()));
+    }
+
+    @GET
+    public List<Task> getTasks(@BeanParam TaskInput input){
+
     }
 
     @GET
