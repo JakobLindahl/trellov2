@@ -6,7 +6,6 @@ import javax.ws.rs.QueryParam;
 public class PagingInput {
 
     @QueryParam("page")
-    @DefaultValue("1")
     private int page;
     @QueryParam("size")
     @DefaultValue("5")

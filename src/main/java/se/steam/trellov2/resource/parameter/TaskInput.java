@@ -1,31 +1,51 @@
 package se.steam.trellov2.resource.parameter;
 
 import se.steam.trellov2.model.status.TaskStatus;
+import se.steam.trellov2.service.exception.WrongInputException;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.QueryParam;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class TaskInput {
 
-    @QueryParam("startDate")
     private LocalDate startDate;
 
-    @QueryParam("endDate")
     private LocalDate endDate;
 
     @QueryParam("status")
     private TaskStatus status;
 
-    public Optional<LocalDate> getStartDate() {
-        return Optional.ofNullable(startDate);
+    @QueryParam("startDate")
+    public void setStartDate(String startDate) {
+        if (Optional.ofNullable(startDate).isPresent() &&
+            Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$").matcher(startDate).matches()) {
+            this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
     }
 
-    public Optional<LocalDate> getEndDate() {
-        return Optional.ofNullable(endDate);
+    @QueryParam("endDate")
+    public void setEndDate(String endDate) {
+        if (Optional.ofNullable(endDate).isPresent() &&
+                Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$").matcher(endDate).matches()) {
+                this.endDate = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
     }
 
-    public Optional<TaskStatus> getStatus() {
-        return Optional.ofNullable(status);
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
     }
 }
