@@ -2,20 +2,19 @@ package se.steam.trellov2.service.implementation;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.TaskEntity;
-import se.steam.trellov2.repository.model.TeamEntity;
 import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.UserInput;
 import se.steam.trellov2.service.UserService;
 import se.steam.trellov2.service.business.Logic;
-import se.steam.trellov2.service.exception.DataNotFoundException;
 import se.steam.trellov2.service.exception.WrongInputException;
 
 import java.util.List;
@@ -73,12 +72,10 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getWithAttributes(UserInput userInput, PagingInput pagingInput) {
+    public Page<User> getWithAttributes(UserInput userInput, PagingInput pagingInput) {
         return userRepository.findByFirstNameContainingAndLastNameContainingAndUsernameContaining
                 (userInput.getFirstName(),userInput.getLastName(),userInput.getUsername(),PageRequest.of(pagingInput.getPage(),pagingInput.getSize()))
-                .stream()
-                .map(ModelParser::fromUserEntity)
-                .collect(Collectors.toList());
+                .map(ModelParser::fromUserEntity);
     }
 
     @Override
