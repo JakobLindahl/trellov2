@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.resource.parameter.PagingInput;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface IssueService{
@@ -15,6 +14,6 @@ public interface IssueService{
 
     void delete(UUID IssueId);
 
-    List<Issue> getPage(UUID teamId, PagingInput pagingInput);
+    Page<Issue> getPage(UUID teamId, PagingInput pagingInput);
 
 }

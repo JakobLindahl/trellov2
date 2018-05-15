@@ -5,15 +5,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.repository.IssueRepository;
-import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.business.Logic;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 final class IssueServiceImp implements IssueService {
@@ -46,11 +43,9 @@ final class IssueServiceImp implements IssueService {
     }
 
     @Override
-    public List<Issue> getPage(UUID teamId, PagingInput pagingInput) {
-        return issueRepository.findAllByTeam(teamId, PageRequest.of(pagingInput.getPage(),pagingInput.getSize()))
-                .stream()
-                .map(ModelParser::fromIssueEntity)
-                .collect(Collectors.toList());
+    public Page<Issue> getPage(UUID teamId, PagingInput pagingInput) {
+        return issueRepository.findByTaskEntityTeamEntity(logic.validateTeam(teamId), PageRequest.of(pagingInput.getPage(),pagingInput.getSize()))
+                .map(ModelParser::fromIssueEntity);
     }
 
 }
