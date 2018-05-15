@@ -76,7 +76,10 @@ final class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getWithIssue() {
-        return issueRepository.findAll().stream().map(IssueEntity::getTaskEntity).map(ModelParser::fromTaskEntity).collect(Collectors.toList());
+        return issueRepository.findAll().stream()
+                .map(IssueEntity::getTaskEntity)
+                .map(ModelParser::fromTaskEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
