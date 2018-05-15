@@ -100,7 +100,7 @@ final class TaskServiceImp implements TaskService {
     @Override
     public Page<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput) {
         return taskRepository.findByTeam(
-                teamId,
+                logic.validateTeam(teamId),
                 taskInput.getStartDate(),
                 taskInput.getEndDate(),
                 taskInput.getStatus(),
