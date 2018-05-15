@@ -3,6 +3,8 @@ package se.steam.trellov2.resource;
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.Task;
+import se.steam.trellov2.resource.mapper.Secured;
+import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.TaskService;
 
@@ -33,9 +35,10 @@ public final class TaskResource {
     }
 
     @PUT
+    @Secured
     @Path("{id}")
     public void updateTask(@PathParam("id") UUID id, Task task) {
-        taskService.update(new Task(id, task.getText(), task.getStatus()));
+        taskService.update(new Task(id, task.getText(), task.getStatus(), task.getDate()));
     }
 
     @GET
@@ -44,14 +47,16 @@ public final class TaskResource {
     }
 
     @POST
+    @Secured
     @Path("{id}/issues")
-    public Response createIssue(@PathParam("id") UUID id, Issue issue){
+    public Response createIssue(@PathParam("id") UUID id, Issue issue) {
         return Response.created(uriInfo.getAbsolutePathBuilder().path(issueService.save(id, issue).getId().toString()).build()).build();
     }
 
     @DELETE
+    @Secured
     @Path("{id}")
-    public void removeTask(@PathParam("id") UUID id){
+    public void removeTask(@PathParam("id") UUID id) {
         taskService.remove(id);
     }
 }
