@@ -21,4 +21,7 @@ public interface TaskService extends Service<Task> {
     List<Task> getByDescription(String description);
 
     List<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput);
+
+    void dropTask(UUID userId, UUID taskId);
+
 }
