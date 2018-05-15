@@ -84,7 +84,7 @@ public final class TeamResource {
 
     @GET
     @Path("{teamId}/tasks")
-    public List<Task> getByTeamAsPage(@PathParam("teamId") UUID teamId,
+    public Page<Task> getByTeamAsPage(@PathParam("teamId") UUID teamId,
                                       @BeanParam PagingInput pagingInput,
                                       @BeanParam TaskInput taskInput) {
         return taskService.getByTeamAsPage(teamId, pagingInput, taskInput);
