@@ -1,5 +1,6 @@
 package se.steam.trellov2.service.implementation;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Task;
@@ -97,7 +98,7 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput) {
+    public Page<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput) {
         return taskRepository.findByTeam(
                 teamId,
                 taskInput.getStartDate(),
@@ -106,9 +107,7 @@ final class TaskServiceImp implements TaskService {
                 PageRequest.of(
                         pagingInput.getPage(),
                         pagingInput.getSize()))
-                .stream()
-                .map(ModelParser::fromTaskEntity)
-                .collect(Collectors.toList());
+                .map(ModelParser::fromTaskEntity);
     }
 
     @Override

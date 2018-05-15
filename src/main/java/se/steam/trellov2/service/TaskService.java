@@ -1,5 +1,6 @@
 package se.steam.trellov2.service;
 
+import org.springframework.data.domain.Page;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.status.TaskStatus;
 import se.steam.trellov2.resource.parameter.PagingInput;
@@ -20,7 +21,7 @@ public interface TaskService extends Service<Task> {
 
     List<Task> getByDescription(String description);
 
-    List<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput);
+    Page<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput);
 
     void dropTask(UUID userId, UUID taskId);
 

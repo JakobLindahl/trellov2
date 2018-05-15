@@ -1,5 +1,6 @@
 package se.steam.trellov2.resource;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.AbstractModel;
 import se.steam.trellov2.model.Task;
@@ -72,7 +73,7 @@ public final class TeamResource {
 
     @GET
     @Path("{teamId}/tasks")
-    public List<Task> getByTeamAsPage(@PathParam("teamId") UUID teamId,
+    public Page<Task> getByTeamAsPage(@PathParam("teamId") UUID teamId,
                                       @BeanParam PagingInput pagingInput,
                                       @BeanParam TaskInput taskInput) {
         return taskService.getByTeamAsPage(teamId, pagingInput, taskInput);
