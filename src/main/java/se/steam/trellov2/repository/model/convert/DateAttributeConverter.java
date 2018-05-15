@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 import static java.sql.Date.valueOf;
 
-@Converter
+@Converter(autoApply = true)
 public class DateAttributeConverter implements AttributeConverter<LocalDate, java.sql.Date> {
 
     @Override

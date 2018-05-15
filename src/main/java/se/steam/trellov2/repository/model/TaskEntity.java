@@ -17,7 +17,6 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
     @Enumerated
     @Column(nullable = false)
     private final TaskStatus status;
-    @Convert(converter = DateAttributeConverter.class)
     @Column(nullable = false)
     private final LocalDate date;
     @ManyToOne
