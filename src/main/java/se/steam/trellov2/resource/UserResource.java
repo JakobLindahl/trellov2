@@ -1,12 +1,12 @@
 package se.steam.trellov2.resource;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.User;
-
 import se.steam.trellov2.resource.mapper.Secured;
+import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.UserInput;
-
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.UserService;
 
@@ -37,8 +37,8 @@ public final class UserResource {
     }
   
     @GET
-    public List<User> getUsers(@BeanParam UserInput input) {
-        return userService.getWithAttributes(input);
+    public Page<User> getUsers(@BeanParam UserInput input, @BeanParam PagingInput pageRequest) {
+        return userService.getWithAttributes(input, pageRequest);
     }
 
     @GET

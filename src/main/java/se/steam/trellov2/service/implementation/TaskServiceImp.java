@@ -1,8 +1,8 @@
 package se.steam.trellov2.service.implementation;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.status.TaskStatus;
 import se.steam.trellov2.repository.IssueRepository;
@@ -25,7 +25,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static se.steam.trellov2.repository.model.parse.ModelParser.*;
+import static se.steam.trellov2.repository.model.parse.ModelParser.fromTaskEntity;
+import static se.steam.trellov2.repository.model.parse.ModelParser.toTaskEntity;
 
 @Service
 final class TaskServiceImp implements TaskService {
@@ -74,14 +75,6 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<Task> getByTeam(UUID teamID) {
-        return taskRepository.findByTeamEntity(logic.validateTeam(teamID))
-                .stream()
-                .map(ModelParser::fromTaskEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Task> getWithIssue() {
         return issueRepository.findAll().stream()
                 .map(IssueEntity::getTaskEntity)
@@ -108,13 +101,16 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public Page<Task> getPage(PagingInput pagingInput) {
-        return null;
-    }
-
-    @Override
-    public List<Task> getTasksByPeriod(TaskInput taskInput) {
-        return null;
+    public Page<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput) {
+        return taskRepository.findByTeam(
+                logic.validateTeam(teamId),
+                taskInput.getStartDate(),
+                taskInput.getEndDate(),
+                taskInput.getStatus(),
+                PageRequest.of(
+                        pagingInput.getPage(),
+                        pagingInput.getSize()))
+                .map(ModelParser::fromTaskEntity);
     }
 
     @Override

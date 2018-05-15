@@ -11,11 +11,9 @@ import java.util.UUID;
 
 public interface TaskService extends Service<Task> {
 
-    Task save(UUID teamId,Task entity);
+    Task save(UUID teamId, Task entity);
 
     List<Task> getByUser(UUID userId);
-
-    List<Task> getByTeam(UUID teamID);
 
     List<Task> getWithIssue();
 
@@ -23,9 +21,8 @@ public interface TaskService extends Service<Task> {
 
     List<Task> getByDescription(String description);
 
-    Page<Task> getPage(PagingInput pagingInput);
-
-    List<Task> getTasksByPeriod(TaskInput taskInput);
+    Page<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput);
 
     void dropTask(UUID userId, UUID taskId);
+
 }

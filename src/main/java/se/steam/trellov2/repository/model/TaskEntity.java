@@ -1,7 +1,7 @@
 package se.steam.trellov2.repository.model;
 
 import se.steam.trellov2.model.status.TaskStatus;
-import se.steam.trellov2.repository.model.convert.DateConverter;
+import se.steam.trellov2.repository.model.convert.DateAttributeConverter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
     @Enumerated
     @Column(nullable = false)
     private final TaskStatus status;
-    @Convert(converter = DateConverter.class)
+    @Convert(converter = DateAttributeConverter.class)
     @Column(nullable = false)
     private final LocalDate date;
     @ManyToOne
@@ -83,7 +83,7 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
     }
 
     public TaskEntity setUserEntity(UserEntity userEntity) {
-        return new TaskEntity(getId(), text, status, date, userEntity, teamEntity);
+        return new TaskEntity(getId(), text, STARTED, date, userEntity, teamEntity);
     }
 
     public TaskEntity setTeamEntity(TeamEntity teamEntity) {

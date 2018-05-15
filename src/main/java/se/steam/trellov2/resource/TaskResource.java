@@ -8,7 +8,6 @@ import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.TaskService;
 
-import javax.persistence.GeneratedValue;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -43,11 +42,6 @@ public final class TaskResource {
     }
 
     @GET
-    public List<Task> getTasksByPeriod(@BeanParam TaskInput input){
-        return taskService.getTasksByPeriod(input);
-    }
-
-    @GET
     public List<Task> getTasksWithIssue() {
         return taskService.getWithIssue();
     }
@@ -55,14 +49,14 @@ public final class TaskResource {
     @POST
     @Secured
     @Path("{id}/issues")
-    public Response createIssue(@PathParam("id") UUID id, Issue issue){
+    public Response createIssue(@PathParam("id") UUID id, Issue issue) {
         return Response.created(uriInfo.getAbsolutePathBuilder().path(issueService.save(id, issue).getId().toString()).build()).build();
     }
 
     @DELETE
     @Secured
     @Path("{id}")
-    public void removeTask(@PathParam("id") UUID id){
+    public void removeTask(@PathParam("id") UUID id) {
         taskService.remove(id);
     }
 }
