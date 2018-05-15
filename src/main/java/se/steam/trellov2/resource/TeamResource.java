@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.AbstractModel;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.Team;
+import se.steam.trellov2.resource.parameter.PagingInput;
+import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.resource.mapper.Secured;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.TeamService;
@@ -13,8 +15,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -53,31 +55,33 @@ public final class TeamResource {
     @PUT
     @Secured
     @Path("{teamId}")
-    public void updateTeam(@PathParam("teamId") UUID teamId, Team team){
+    public void updateTeam(@PathParam("teamId") UUID teamId, Team team) {
         teamService.update(new Team(teamId, team.getName()));
     }
 
     @GET
-    public Response getAllTeams(){
+    public Response getAllTeams() {
         return Response.ok(teamService.getAll()).build();
     }
 
     @GET
     @Path("{teamId}/users")
-    public Response getAllUsersByTeam(@PathParam("teamId") UUID teamId){
+    public Response getAllUsersByTeam(@PathParam("teamId") UUID teamId) {
         return Response.ok(userService.getByTeam(teamId)).build();
     }
 
     @GET
     @Path("{teamId}/tasks")
-    public Response getAllTasksByTeam(@PathParam("teamId") UUID teamId){
-        return Response.ok(taskService.getByTeam(teamId)).build();
+    public List<Task> getByTeamAsPage(@PathParam("teamId") UUID teamId,
+                                      @BeanParam PagingInput pagingInput,
+                                      @BeanParam TaskInput taskInput) {
+        return taskService.getByTeamAsPage(teamId, pagingInput, taskInput);
     }
 
     @POST
     @Secured
     @Path("{teamId}/tasks")
-    public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task){
+    public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task) {
         return Response.created(getCreatedToDoUri(uriInfo, taskService.save(teamId, task))).build();
     }
 
@@ -85,7 +89,7 @@ public final class TeamResource {
     @Secured
     @Path("{teamId}/users/{userId}")
     public void addUserToTeam(@PathParam("teamId") UUID teamId,
-                              @PathParam("userId") UUID userId){
+                              @PathParam("userId") UUID userId) {
         teamService.addUserToTeam(teamId, userId);
     }
 
@@ -100,7 +104,7 @@ public final class TeamResource {
     @DELETE
     @Secured
     @Path("{id}")
-    public void removeTeam(@PathParam("id") UUID id){
+    public void removeTeam(@PathParam("id") UUID id) {
         teamService.remove(id);
     }
 
