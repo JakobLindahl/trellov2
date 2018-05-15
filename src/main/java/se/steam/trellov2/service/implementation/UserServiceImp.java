@@ -1,6 +1,7 @@
 package se.steam.trellov2.service.implementation;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
@@ -72,13 +73,10 @@ final class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getWithAttributes(UserInput userInput) {
-        return userRepository.findAll().stream()
-                .filter((u) ->
-                    u.isActive() &&
-                    (u.getFirstName().contains(userInput.getFirstName()) &&
-                    u.getLastName().contains(userInput.getLastName()) &&
-                    u.getUsername().contains(userInput.getUsername())))
+    public List<User> getWithAttributes(UserInput userInput, PagingInput pagingInput) {
+        return userRepository.findByFirstNameContainingAndLastNameContainingAndUsernameContaining
+                (userInput.getFirstName(),userInput.getLastName(),userInput.getUsername(),PageRequest.of(pagingInput.getPage(),pagingInput.getSize()))
+                .stream()
                 .map(ModelParser::fromUserEntity)
                 .collect(Collectors.toList());
     }
@@ -91,11 +89,6 @@ final class UserServiceImp implements UserService {
                         logic.checkIfTaskIsTaken(logic.validateTask(taskId))
                 )
         );
-    }
-
-    @Override
-    public Page<User> getPage(PagingInput pagingInput) {
-        return null;
     }
 
     @Override
