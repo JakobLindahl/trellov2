@@ -1,12 +1,16 @@
 package se.steam.trellov2.resource;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.AbstractModel;
+import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.resource.mapper.Secured;
+import se.steam.trellov2.resource.parameter.PagingInput;
+import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.TeamService;
 import se.steam.trellov2.service.UserService;
@@ -30,14 +34,16 @@ public final class TeamResource {
     private final TeamService teamService;
     private final UserService userService;
     private final TaskService taskService;
+    private final IssueService issueService;
 
     @Context
     private UriInfo uriInfo;
 
-    public TeamResource(TeamService teamService, UserService userService, TaskService taskService) {
+    public TeamResource(TeamService teamService, UserService userService, TaskService taskService, IssueService issueService) {
         this.teamService = teamService;
         this.userService = userService;
         this.taskService = taskService;
+        this.issueService = issueService;
     }
 
     @POST
@@ -68,6 +74,12 @@ public final class TeamResource {
     @Path("{teamId}/users")
     public Response getAllUsersByTeam(@PathParam("teamId") UUID teamId) {
         return Response.ok(userService.getByTeam(teamId)).build();
+    }
+
+    @GET
+    @Path("{teamId}/issues")
+    public Page<Issue> getAllTasksByPage(@PathParam("teamId") UUID teamId, @BeanParam PagingInput pagingInput){
+        return issueService.getPage(teamId, pagingInput);
     }
 
     @GET

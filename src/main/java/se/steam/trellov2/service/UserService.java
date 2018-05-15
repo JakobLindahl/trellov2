@@ -14,7 +14,7 @@ public interface UserService extends Service<User> {
 
     List<User> getByTeam(UUID teamId);
 
-    List<User> getWithAttributes(UserInput userInput, PagingInput pagingInput);
+    Page<User> getWithAttributes(UserInput userInput, PagingInput pagingInput);
 
     void addTaskToUser(UUID userId, UUID taskId);
 

@@ -83,7 +83,7 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
     }
 
     public TaskEntity setUserEntity(UserEntity userEntity) {
-        return new TaskEntity(getId(), text, status, date, userEntity, teamEntity);
+        return new TaskEntity(getId(), text, STARTED, date, userEntity, teamEntity);
     }
 
     public TaskEntity setTeamEntity(TeamEntity teamEntity) {

@@ -15,10 +15,10 @@ public final class Task extends AbstractModel<Task> {
     private final LocalDate date;
 
     @JsonCreator
-    public Task(String text) {
+    public Task(String text, TaskStatus status) {
         super(null);
         this.text = text;
-        this.status = UNSTARTED;
+        this.status = status == null ? UNSTARTED : status;
         this.date = LocalDate.now();
     }
 

@@ -14,6 +14,6 @@ public interface IssueService{
 
     void delete(UUID IssueId);
 
-    Page<Issue> getPage(PagingInput pagingInput);
+    Page<Issue> getPage(UUID teamId, PagingInput pagingInput);
 
 }
