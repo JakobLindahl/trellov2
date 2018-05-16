@@ -3,10 +3,7 @@ package se.steam.trellov2.resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
-import se.steam.trellov2.model.AbstractModel;
-import se.steam.trellov2.model.Issue;
-import se.steam.trellov2.model.Task;
-import se.steam.trellov2.model.Team;
+import se.steam.trellov2.model.*;
 import se.steam.trellov2.resource.mapper.Secured;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.TaskInput;
@@ -17,7 +14,6 @@ import se.steam.trellov2.service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.sse.Sse;
@@ -28,8 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static javax.ws.rs.core.MediaType.*;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.SERVER_SENT_EVENTS;
 
 @Component
 @Path("teams")
@@ -122,10 +118,11 @@ public final class TeamResource {
     @Secured
     @Path("{teamId}/tasks")
     public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task) {
-        task = taskService.save(teamId, task);
-        Team team = teamService.get(teamId);
-        notify(team, String.format("task \"%s\" added to team \"%s\"",task.getText(), team.getName()));
-        return Response.created(getCreatedToDoUri(uriInfo, task)).build();
+        Pair<Team, Task> pair = taskService.save(teamId, task);
+        notify(pair.getFirst(), String.format("task \"%s\" added to team \"%s\"",
+                pair.getSecond().getText(),
+                pair.getFirst().getName()));
+        return Response.created(getCreatedToDoUri(uriInfo, pair.getSecond())).build();
     }
 
     @PUT
@@ -133,7 +130,10 @@ public final class TeamResource {
     @Path("{teamId}/users/{userId}")
     public void addUserToTeam(@PathParam("teamId") UUID teamId,
                               @PathParam("userId") UUID userId) {
-        teamService.addUserToTeam(teamId, userId);
+        Pair<Team, User> pair = teamService.addUserToTeam(teamId, userId);
+        notify(pair.getFirst(), String.format("User \"%s\" joined team \"%s\"",
+                pair.getSecond().getUsername(),
+                pair.getFirst().getName()));
     }
 
     @DELETE
