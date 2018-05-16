@@ -2,7 +2,6 @@ package se.steam.trellov2.service.implementation;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
@@ -74,10 +73,10 @@ final class UserServiceImp implements UserService {
     @Override
     public Page<User> getWithAttributes(UserInput userInput, PagingInput pagingInput) {
         return userRepository.findByFirstNameContainingAndLastNameContainingAndUsernameContaining(
-                        userInput.getFirstName(),
-                        userInput.getLastName(),
-                        userInput.getUsername(),
-                        PageRequest.of(pagingInput.getPage(), pagingInput.getSize()))
+                userInput.getFirstName(),
+                userInput.getLastName(),
+                userInput.getUsername(),
+                PageRequest.of(pagingInput.getPage(), pagingInput.getSize()))
                 .map(ModelParser::fromUserEntity);
     }
 

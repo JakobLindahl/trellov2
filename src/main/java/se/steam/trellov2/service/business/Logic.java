@@ -2,7 +2,6 @@ package se.steam.trellov2.service.business;
 
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.User;
-import se.steam.trellov2.model.status.TaskStatus;
 import se.steam.trellov2.repository.IssueRepository;
 import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
@@ -12,7 +11,7 @@ import se.steam.trellov2.service.exception.*;
 
 import java.util.UUID;
 
-import static se.steam.trellov2.model.status.TaskStatus.*;
+import static se.steam.trellov2.model.status.TaskStatus.DONE;
 
 @Component
 public final class Logic {

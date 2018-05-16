@@ -1,7 +1,5 @@
 package se.steam.trellov2.repository.model;
 
-import org.hibernate.annotations.Columns;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

@@ -35,7 +35,7 @@ public final class UserResource {
         this.userService = userService;
         this.taskService = taskService;
     }
-  
+
     @GET
     public Page<User> getUsers(@BeanParam UserInput input, @BeanParam PagingInput pageRequest) {
         return userService.getWithAttributes(input, pageRequest);
@@ -43,7 +43,7 @@ public final class UserResource {
 
     @GET
     @Path("{id}")
-    public User getUser(@PathParam("id") UUID id){
+    public User getUser(@PathParam("id") UUID id) {
         return userService.get(id);
     }
 
@@ -63,7 +63,7 @@ public final class UserResource {
     @DELETE
     @Secured
     @Path("{id}")
-    public void removeUser(@PathParam("id") UUID id){
+    public void removeUser(@PathParam("id") UUID id) {
         userService.remove(id);
     }
 

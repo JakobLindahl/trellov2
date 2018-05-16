@@ -1,14 +1,10 @@
 package se.steam.trellov2.resource.parameter;
 
 import se.steam.trellov2.model.status.TaskStatus;
-import se.steam.trellov2.service.exception.WrongInputException;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.QueryParam;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 

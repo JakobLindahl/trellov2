@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static se.steam.trellov2.model.status.TaskStatus.*;
+import static se.steam.trellov2.model.status.TaskStatus.STARTED;
+import static se.steam.trellov2.model.status.TaskStatus.UNSTARTED;
 
 @Entity(name = "Tasks")
 public final class TaskEntity extends AbstractEntity<TaskEntity> {

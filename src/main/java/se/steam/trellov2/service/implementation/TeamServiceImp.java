@@ -4,18 +4,16 @@ import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
-import se.steam.trellov2.repository.model.TeamEntity;
-import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.service.TeamService;
 import se.steam.trellov2.service.business.Logic;
-import se.steam.trellov2.service.exception.DataNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static se.steam.trellov2.repository.model.parse.ModelParser.*;
+import static se.steam.trellov2.repository.model.parse.ModelParser.fromTeamEntity;
+import static se.steam.trellov2.repository.model.parse.ModelParser.toTeamEntity;
 
 @Service
 final class TeamServiceImp implements TeamService {
