@@ -63,14 +63,14 @@ public final class Logic {
     }
 
     public TaskEntity checkIfSameTeam(UserEntity userEntity, TaskEntity taskEntity) {
-        if(userEntity.getTeamEntity().getId() == taskEntity.getTeamEntity().getId()) {
+        if (userEntity.getTeamEntity().getId() == taskEntity.getTeamEntity().getId()) {
             return taskEntity.setUserEntity(userEntity);
         }
         throw new WrongInputException("Task and User do not belong to the same Team");
     }
 
     private <T extends AbstractEntity> T checkIfActive(T entity) {
-        if(entity.isActive()) {
+        if (entity.isActive()) {
             return entity;
         }
         throw new InactiveEntityException("Inactive " +

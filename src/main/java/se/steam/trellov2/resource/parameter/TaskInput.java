@@ -20,7 +20,7 @@ public class TaskInput {
     @QueryParam("startDate")
     public void setStartDate(String startDate) {
         if (Optional.ofNullable(startDate).isPresent() &&
-            Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$").matcher(startDate).matches()) {
+                Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$").matcher(startDate).matches()) {
             this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
     }
@@ -29,7 +29,7 @@ public class TaskInput {
     public void setEndDate(String endDate) {
         if (Optional.ofNullable(endDate).isPresent() &&
                 Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$").matcher(endDate).matches()) {
-                this.endDate = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            this.endDate = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
     }
 

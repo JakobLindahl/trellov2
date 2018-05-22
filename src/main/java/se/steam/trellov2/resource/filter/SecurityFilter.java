@@ -21,6 +21,7 @@ import static javax.ws.rs.core.Response.status;
 public final class SecurityFilter implements ContainerRequestFilter {
 
     private Environment environment;
+
     public SecurityFilter(Environment environment) {
         this.environment = environment;
     }

@@ -1,7 +1,6 @@
 package se.steam.trellov2.repository.model;
 
 import se.steam.trellov2.model.status.TaskStatus;
-import se.steam.trellov2.repository.model.convert.DateAttributeConverter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,7 +26,7 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
     @JoinColumn(name = "Team", nullable = false, updatable = false)
     private final TeamEntity teamEntity;
 
-    TaskEntity(){
+    TaskEntity() {
         this.text = null;
         this.status = null;
         this.date = null;

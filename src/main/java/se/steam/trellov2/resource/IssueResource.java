@@ -30,14 +30,14 @@ public final class IssueResource {
     @PUT
     @Secured
     @Path("{id}")
-    public void updateIssue(@PathParam("id") UUID id, Issue issue){
-        issueService.update(new Issue(id,issue.getDescription()));
+    public void updateIssue(@PathParam("id") UUID id, Issue issue) {
+        issueService.update(new Issue(id, issue.getDescription()));
     }
 
     @DELETE
     @Secured
     @Path("{id}")
-    public void deleteIssue(@PathParam("id") UUID id){
+    public void deleteIssue(@PathParam("id") UUID id) {
         issueService.delete(id);
     }
 }

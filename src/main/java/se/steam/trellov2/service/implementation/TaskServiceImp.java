@@ -113,7 +113,7 @@ final class TaskServiceImp implements TaskService {
     @Override
     public void dropTask(UUID userId, UUID taskId) {
         TaskEntity t = logic.validateTask(taskId);
-        if(t.getUserEntity().getId() == userId) {
+        if (t.getUserEntity().getId() == userId) {
             taskRepository.save(t.dropTask());
         } else {
             throw new WrongInputException("Task does not belong to User");

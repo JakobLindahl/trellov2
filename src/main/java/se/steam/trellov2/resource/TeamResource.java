@@ -1,7 +1,6 @@
 package se.steam.trellov2.resource;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.AbstractModel;
 import se.steam.trellov2.model.Issue;
@@ -17,7 +16,6 @@ import se.steam.trellov2.service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.sse.Sse;
@@ -28,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static javax.ws.rs.core.MediaType.*;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.SERVER_SENT_EVENTS;
 
 @Component
 @Path("teams")
@@ -124,7 +122,7 @@ public final class TeamResource {
     public Response createTaskByTeam(@PathParam("teamId") UUID teamId, Task task) {
         task = taskService.save(teamId, task);
         Team team = teamService.get(teamId);
-        notify(team, String.format("task \"%s\" added to team \"%s\"",task.getText(), team.getName()));
+        notify(team, String.format("task \"%s\" added to team \"%s\"", task.getText(), team.getName()));
         return Response.created(getCreatedToDoUri(uriInfo, task)).build();
     }
 
@@ -155,7 +153,7 @@ public final class TeamResource {
         return uriInfo.getAbsolutePathBuilder().path(entity.getId().toString()).build();
     }
 
-    private void notify(Team team, String message){
+    private void notify(Team team, String message) {
         getBroadcaster(team).broadcast(sse.newEvent(message));
     }
 }
