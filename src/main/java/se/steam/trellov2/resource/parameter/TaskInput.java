@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class TaskInput {
+public final class TaskInput {
 
     private LocalDate startDate;
 
