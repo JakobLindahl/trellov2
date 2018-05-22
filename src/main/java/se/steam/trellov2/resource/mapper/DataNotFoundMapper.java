@@ -5,7 +5,6 @@ import se.steam.trellov2.service.exception.DataNotFoundException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-
 import java.util.Collections;
 
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;

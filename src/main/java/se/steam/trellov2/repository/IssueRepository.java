@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import se.steam.trellov2.repository.model.IssueEntity;
 import se.steam.trellov2.repository.model.TeamEntity;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface IssueRepository extends JpaRepository<IssueEntity, UUID> {

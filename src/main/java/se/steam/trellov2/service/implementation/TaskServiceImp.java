@@ -13,14 +13,11 @@ import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.IssueEntity;
 import se.steam.trellov2.repository.model.TaskEntity;
-import se.steam.trellov2.repository.model.TeamEntity;
-import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.business.Logic;
-import se.steam.trellov2.service.exception.DataNotFoundException;
 import se.steam.trellov2.service.exception.WrongInputException;
 
 import java.util.List;
@@ -119,7 +116,7 @@ final class TaskServiceImp implements TaskService {
     @Override
     public void dropTask(UUID userId, UUID taskId) {
         TaskEntity t = logic.validateTask(taskId);
-        if(t.getUserEntity().getId() == userId) {
+        if (t.getUserEntity().getId() == userId) {
             taskRepository.save(t.dropTask());
         } else {
             throw new WrongInputException("Task does not belong to User");

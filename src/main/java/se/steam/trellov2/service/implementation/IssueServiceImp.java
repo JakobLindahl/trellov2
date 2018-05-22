@@ -44,7 +44,7 @@ final class IssueServiceImp implements IssueService {
 
     @Override
     public Page<Issue> getPage(UUID teamId, PagingInput pagingInput) {
-        return issueRepository.findByTaskEntityTeamEntity(logic.validateTeam(teamId), PageRequest.of(pagingInput.getPage(),pagingInput.getSize()))
+        return issueRepository.findByTaskEntityTeamEntity(logic.validateTeam(teamId), PageRequest.of(pagingInput.getPage(), pagingInput.getSize()))
                 .map(ModelParser::fromIssueEntity);
     }
 

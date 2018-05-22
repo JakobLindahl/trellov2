@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.resource.mapper.Secured;
-import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.IssueService;
 import se.steam.trellov2.service.TaskService;
 
