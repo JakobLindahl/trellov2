@@ -1,9 +1,12 @@
 package se.steam.trellov2.service.implementation;
 
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Team;
+import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
+import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.service.TeamService;
 import se.steam.trellov2.service.business.Logic;
@@ -12,8 +15,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static se.steam.trellov2.repository.model.parse.ModelParser.fromTeamEntity;
-import static se.steam.trellov2.repository.model.parse.ModelParser.toTeamEntity;
+import static se.steam.trellov2.repository.model.parse.ModelParser.*;
 
 @Service
 final class TeamServiceImp implements TeamService {
@@ -50,9 +52,10 @@ final class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public void addUserToTeam(UUID teamId, UUID userId) {
-        userRepository.save(logic.checkUserTeamAvailability(logic.validateUser(userId))
+    public Pair<Team, User> addUserToTeam(UUID teamId, UUID userId) {
+        UserEntity s = userRepository.save(logic.checkUserTeamAvailability(logic.validateUser(userId))
                 .setTeamEntity(logic.checkTeamMaxCap(logic.validateTeam(teamId))));
+        return Pair.of(fromTeamEntity(s.getTeamEntity()), fromUserEntity(s));
     }
 
     @Override

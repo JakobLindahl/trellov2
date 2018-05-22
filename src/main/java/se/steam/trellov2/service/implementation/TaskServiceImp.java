@@ -2,8 +2,10 @@ package se.steam.trellov2.service.implementation;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Task;
+import se.steam.trellov2.model.Team;
 import se.steam.trellov2.model.status.TaskStatus;
 import se.steam.trellov2.repository.IssueRepository;
 import se.steam.trellov2.repository.TaskRepository;
@@ -22,8 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static se.steam.trellov2.repository.model.parse.ModelParser.fromTaskEntity;
-import static se.steam.trellov2.repository.model.parse.ModelParser.toTaskEntity;
+import static se.steam.trellov2.repository.model.parse.ModelParser.*;
 
 @Service
 final class TaskServiceImp implements TaskService {
@@ -43,8 +44,10 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public Task save(UUID teamId, Task entity) {
-        return fromTaskEntity(taskRepository.save(toTaskEntity(entity.assignId()).setTeamEntity(logic.validateTeam(teamId))));
+    public Pair<Team, Task> save(UUID teamId, Task task) {
+        TaskEntity taskEntity = taskRepository.save(toTaskEntity(task.assignId())
+                .setTeamEntity(logic.validateTeam(teamId)));
+        return Pair.of(fromTeamEntity(taskEntity.getTeamEntity()),fromTaskEntity(taskEntity));
     }
 
     @Override
