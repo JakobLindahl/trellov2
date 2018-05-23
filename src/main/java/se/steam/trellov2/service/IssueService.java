@@ -6,7 +6,7 @@ import se.steam.trellov2.resource.parameter.PagingInput;
 
 import java.util.UUID;
 
-public interface IssueService{
+public interface IssueService {
 
     Issue save(UUID taskId, Issue issue);
 
