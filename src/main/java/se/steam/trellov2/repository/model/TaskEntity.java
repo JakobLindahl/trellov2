@@ -1,13 +1,13 @@
 package se.steam.trellov2.repository.model;
 
 import se.steam.trellov2.model.status.TaskStatus;
-import se.steam.trellov2.repository.model.convert.DateAttributeConverter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static se.steam.trellov2.model.status.TaskStatus.*;
+import static se.steam.trellov2.model.status.TaskStatus.STARTED;
+import static se.steam.trellov2.model.status.TaskStatus.UNSTARTED;
 
 @Entity(name = "Tasks")
 public final class TaskEntity extends AbstractEntity<TaskEntity> {
@@ -26,7 +26,7 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
     @JoinColumn(name = "Team", nullable = false, updatable = false)
     private final TeamEntity teamEntity;
 
-    TaskEntity(){
+    TaskEntity() {
         this.text = null;
         this.status = null;
         this.date = null;
@@ -95,6 +95,6 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
 
     @Override
     public TaskEntity deactivate() {
-        return new TaskEntity(getId(), isActive(), text, status, date);
+        return new TaskEntity(getId(), false, text, status, date);
     }
 }
