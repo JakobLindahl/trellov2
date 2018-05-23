@@ -4,9 +4,11 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Team;
 import se.steam.trellov2.model.User;
+import se.steam.trellov2.repository.IssueRepository;
+import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
-import se.steam.trellov2.repository.model.UserEntity;
+import se.steam.trellov2.repository.model.*;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.service.TeamService;
 import se.steam.trellov2.service.business.Logic;
@@ -22,11 +24,16 @@ final class TeamServiceImp implements TeamService {
 
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
+    private final IssueRepository issueRepository;
+    private final TaskRepository taskRepository;
     private final Logic logic;
 
-    private TeamServiceImp(TeamRepository teamRepository, UserRepository userRepository, Logic logic) {
+    private TeamServiceImp(TeamRepository teamRepository, UserRepository userRepository,
+                           IssueRepository issueRepository, TaskRepository taskRepository, Logic logic) {
         this.teamRepository = teamRepository;
         this.userRepository = userRepository;
+        this.issueRepository = issueRepository;
+        this.taskRepository = taskRepository;
         this.logic = logic;
     }
 
@@ -47,8 +54,26 @@ final class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public void remove(UUID entityId) {
-        teamRepository.save(logic.validateTeam(entityId).deactivate());
+    public void remove(UUID teamId) {
+        TeamEntity teamEntity = logic.validateTeam(teamId);
+
+        userRepository.saveAll(userRepository.findByTeamEntity(teamEntity).stream()
+                .map(UserEntity::leaveTeam)
+                .collect(Collectors.toList()));
+
+        List<TaskEntity> taskEntities = taskRepository.findByTeamEntityAndActive(teamEntity, true);
+
+        taskEntities.forEach((t) ->
+            issueRepository.saveAll(issueRepository.findByTaskEntity(t).stream()
+                    .map(IssueEntity::deactivate)
+                    .collect(Collectors.toList()))
+        );
+
+        taskRepository.saveAll(taskEntities.stream()
+                .map(TaskEntity::deactivate)
+                .collect(Collectors.toList()));
+
+        teamRepository.save(logic.validateTeam(teamId).deactivate());
     }
 
     @Override
@@ -62,6 +87,7 @@ final class TeamServiceImp implements TeamService {
     public List<Team> getAll() {
         return teamRepository.findAll()
                 .stream()
+                .filter(AbstractEntity::isActive)
                 .map(ModelParser::fromTeamEntity)
                 .collect(Collectors.toList());
     }

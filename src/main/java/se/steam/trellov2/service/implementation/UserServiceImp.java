@@ -73,10 +73,11 @@ final class UserServiceImp implements UserService {
 
     @Override
     public Page<User> getWithAttributes(UserInput userInput, PagingInput pagingInput) {
-        return userRepository.findByFirstNameContainingAndLastNameContainingAndUsernameContaining(
+        return userRepository.findByFirstNameContainingAndLastNameContainingAndUsernameContainingAndActive(
                         userInput.getFirstName(),
                         userInput.getLastName(),
                         userInput.getUsername(),
+                        true,
                         PageRequest.of(pagingInput.getPage(), pagingInput.getSize()))
                 .map(ModelParser::fromUserEntity);
     }

@@ -25,7 +25,7 @@ public class AppConfig extends ResourceConfig {
 
     public AppConfig(Environment environment) {
         this.environment = environment;
-        this.packages("se.steam.trellov2.resource");
+        this.packages("se.steam.trellov2");
     }
 
     @Bean

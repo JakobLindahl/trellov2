@@ -33,15 +33,11 @@ import static se.steam.trellov2.repository.model.parse.ModelParser.*;
 final class TaskServiceImp implements TaskService {
 
     private final TaskRepository taskRepository;
-    private final TeamRepository teamRepository;
-    private final UserRepository userRepository;
     private final IssueRepository issueRepository;
     private final Logic logic;
 
-    private TaskServiceImp(TaskRepository taskRepository, TeamRepository teamRepository, UserRepository userRepository, IssueRepository issueRepository, Logic logic) {
+    private TaskServiceImp(TaskRepository taskRepository, IssueRepository issueRepository, Logic logic) {
         this.taskRepository = taskRepository;
-        this.teamRepository = teamRepository;
-        this.userRepository = userRepository;
         this.issueRepository = issueRepository;
         this.logic = logic;
     }
@@ -59,14 +55,16 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public void update(Task entity) {
-        logic.validateTask(entity.getId());
-        taskRepository.save(toTaskEntity(entity));
+    public void update(Task task) {
+        logic.validateTask(task.getId());
+        taskRepository.save(toTaskEntity(task));
     }
 
     @Override
-    public void remove(UUID entityId) {
-        taskRepository.save(logic.validateTask(entityId).deactivate());
+    public void remove(UUID taskId) {
+        TaskEntity taskEntity = logic.validateTask(taskId);
+        issueRepository.findByTaskEntity(taskEntity).forEach(x -> issueRepository.save(x.deactivate()));
+        taskRepository.save(taskEntity.deactivate());
     }
 
     @Override
@@ -86,27 +84,11 @@ final class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<Task> getByStatus(TaskStatus status) {
-        return taskRepository.findAll()
-                .stream()
-                .filter(t -> status.equals(t.getStatus()))
-                .map(ModelParser::fromTaskEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Task> getByDescription(String description) {
-        return taskRepository.findAll()
-                .stream()
-                .filter(t -> t.getText().contains(description))
-                .map(ModelParser::fromTaskEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public Page<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput) {
         return taskRepository.findByTeam(
                 logic.validateTeam(teamId),
+                true,
+                taskInput.getText(),
                 taskInput.getStartDate(),
                 taskInput.getEndDate(),
                 taskInput.getStatus(),
@@ -119,7 +101,7 @@ final class TaskServiceImp implements TaskService {
     @Override
     public void dropTask(UUID userId, UUID taskId) {
         TaskEntity t = logic.validateTask(taskId);
-        if(t.getUserEntity().getId() == userId) {
+        if(t.getUserEntity().getId().toString().equals(userId.toString())) {
             taskRepository.save(t.dropTask());
         } else {
             throw new WrongInputException("Task does not belong to User");

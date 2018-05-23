@@ -19,15 +19,20 @@ public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
 
     List<TaskEntity> findByUserEntity(UserEntity userEntity);
 
-    Page<TaskEntity> findByTeamEntity(TeamEntity teamEntity, Pageable pageable);
-
     @Query("select t from Tasks t join t.teamEntity e where e = :teamEntity and " +
+            "t.active = :active and " +
+            "t.text like %:text% and " +
             "(:startDate is null or t.date >= :startDate) and " +
             "(:endDate is null or t.date <= :endDate) and " +
             "(:status is null or t.status = :status)")
     Page<TaskEntity> findByTeam(TeamEntity teamEntity,
+                                boolean active,
+                                String text,
                                 LocalDate startDate,
                                 LocalDate endDate,
                                 TaskStatus status,
                                 Pageable pageable);
+
+    List<TaskEntity> findByTeamEntityAndActive(TeamEntity teamEntity, boolean active);
+
 }

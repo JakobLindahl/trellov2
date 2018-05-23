@@ -19,10 +19,6 @@ public interface TaskService extends Service<Task> {
 
     List<Task> getWithIssue();
 
-    List<Task> getByStatus(TaskStatus status);
-
-    List<Task> getByDescription(String description);
-
     Page<Task> getByTeamAsPage(UUID teamId, PagingInput pagingInput, TaskInput taskInput);
 
     void dropTask(UUID userId, UUID taskId);
