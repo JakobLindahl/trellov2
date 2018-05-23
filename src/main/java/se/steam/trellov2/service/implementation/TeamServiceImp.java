@@ -64,9 +64,9 @@ final class TeamServiceImp implements TeamService {
         List<TaskEntity> taskEntities = taskRepository.findByTeamEntityAndActive(teamEntity, true);
 
         taskEntities.forEach((t) ->
-            issueRepository.saveAll(issueRepository.findByTaskEntity(t).stream()
-                    .map(IssueEntity::deactivate)
-                    .collect(Collectors.toList()))
+                issueRepository.saveAll(issueRepository.findByTaskEntity(t).stream()
+                        .map(IssueEntity::deactivate)
+                        .collect(Collectors.toList()))
         );
 
         taskRepository.saveAll(taskEntities.stream()

@@ -6,21 +6,16 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Task;
 import se.steam.trellov2.model.Team;
-import se.steam.trellov2.model.status.TaskStatus;
 import se.steam.trellov2.repository.IssueRepository;
 import se.steam.trellov2.repository.TaskRepository;
-import se.steam.trellov2.repository.TeamRepository;
-import se.steam.trellov2.repository.UserRepository;
+import se.steam.trellov2.repository.model.AbstractEntity;
 import se.steam.trellov2.repository.model.IssueEntity;
 import se.steam.trellov2.repository.model.TaskEntity;
-import se.steam.trellov2.repository.model.TeamEntity;
-import se.steam.trellov2.repository.model.UserEntity;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.resource.parameter.TaskInput;
 import se.steam.trellov2.service.TaskService;
 import se.steam.trellov2.service.business.Logic;
-import se.steam.trellov2.service.exception.DataNotFoundException;
 import se.steam.trellov2.service.exception.WrongInputException;
 
 import java.util.List;
@@ -46,7 +41,7 @@ final class TaskServiceImp implements TaskService {
     public Pair<Team, Task> save(UUID teamId, Task task) {
         TaskEntity taskEntity = taskRepository.save(toTaskEntity(task.assignId())
                 .setTeamEntity(logic.validateTeam(teamId)));
-        return Pair.of(fromTeamEntity(taskEntity.getTeamEntity()),fromTaskEntity(taskEntity));
+        return Pair.of(fromTeamEntity(taskEntity.getTeamEntity()), fromTaskEntity(taskEntity));
     }
 
     @Override
@@ -77,8 +72,9 @@ final class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getWithIssue() {
-        return issueRepository.findAll().stream()
+        return issueRepository.findAll().stream().filter(AbstractEntity::isActive)
                 .map(IssueEntity::getTaskEntity)
+                .filter(TaskEntity::isActive)
                 .map(ModelParser::fromTaskEntity)
                 .collect(Collectors.toList());
     }
@@ -101,7 +97,7 @@ final class TaskServiceImp implements TaskService {
     @Override
     public void dropTask(UUID userId, UUID taskId) {
         TaskEntity t = logic.validateTask(taskId);
-        if(t.getUserEntity().getId().toString().equals(userId.toString())) {
+        if (t.getUserEntity() != null && t.getUserEntity().getId().toString().equals(userId.toString())) {
             taskRepository.save(t.dropTask());
         } else {
             throw new WrongInputException("Task does not belong to User");

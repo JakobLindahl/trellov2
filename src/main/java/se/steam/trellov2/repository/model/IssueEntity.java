@@ -1,7 +1,5 @@
 package se.steam.trellov2.repository.model;
 
-import se.steam.trellov2.model.Issue;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

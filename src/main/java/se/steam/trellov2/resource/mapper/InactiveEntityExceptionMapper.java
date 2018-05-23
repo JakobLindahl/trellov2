@@ -7,7 +7,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import java.util.Collections;
 
-import static javax.ws.rs.core.Response.Status.*;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Provider
 public class InactiveEntityExceptionMapper implements ExceptionMapper<InactiveEntityException> {

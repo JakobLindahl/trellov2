@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import java.util.UUID;
 
 @Entity(name = "Teams")
-public final class TeamEntity  extends AbstractEntity<TeamEntity>{
+public final class TeamEntity extends AbstractEntity<TeamEntity> {
 
     @Column(nullable = false)
     private final String name;

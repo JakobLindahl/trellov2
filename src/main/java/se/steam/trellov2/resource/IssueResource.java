@@ -7,9 +7,7 @@ import se.steam.trellov2.service.IssueService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import java.util.UUID;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -32,14 +30,14 @@ public final class IssueResource {
     @PUT
     @Secured
     @Path("{id}")
-    public void updateIssue(@PathParam("id") UUID id, Issue issue){
-        issueService.update(new Issue(id,issue.getDescription()));
+    public void updateIssue(@PathParam("id") UUID id, Issue issue) {
+        issueService.update(new Issue(id, issue.getDescription()));
     }
 
     @DELETE
     @Secured
     @Path("{id}")
-    public void deleteIssue(@PathParam("id") UUID id){
+    public void deleteIssue(@PathParam("id") UUID id) {
         issueService.delete(id);
     }
 }
