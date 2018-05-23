@@ -95,6 +95,6 @@ public final class TaskEntity extends AbstractEntity<TaskEntity> {
 
     @Override
     public TaskEntity deactivate() {
-        return new TaskEntity(getId(), isActive(), text, status, date);
+        return new TaskEntity(getId(), false, text, status, date);
     }
 }

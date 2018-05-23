@@ -72,10 +72,11 @@ final class UserServiceImp implements UserService {
 
     @Override
     public Page<User> getWithAttributes(UserInput userInput, PagingInput pagingInput) {
-        return userRepository.findByFirstNameContainingAndLastNameContainingAndUsernameContaining(
+        return userRepository.findByFirstNameContainingAndLastNameContainingAndUsernameContainingAndActive(
                 userInput.getFirstName(),
                 userInput.getLastName(),
                 userInput.getUsername(),
+                true,
                 PageRequest.of(pagingInput.getPage(), pagingInput.getSize()))
                 .map(ModelParser::fromUserEntity);
     }
@@ -93,7 +94,8 @@ final class UserServiceImp implements UserService {
     @Override
     public void leaveTeam(UUID teamId, UUID userId) {
         UserEntity u = logic.validateUser(userId);
-        if (u.getTeamEntity().getId() == teamId) {
+        if (u.getTeamEntity() != null &&
+                u.getTeamEntity().getId().toString().equals(teamId.toString())) {
             userRepository.save(u.leaveTeam());
         } else {
             throw new WrongInputException("User does not belong to requested Team");

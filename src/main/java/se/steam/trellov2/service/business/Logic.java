@@ -63,7 +63,8 @@ public final class Logic {
     }
 
     public TaskEntity checkIfSameTeam(UserEntity userEntity, TaskEntity taskEntity) {
-        if (userEntity.getTeamEntity().getId() == taskEntity.getTeamEntity().getId()) {
+        if (userEntity.getTeamEntity() != null &&
+                userEntity.getTeamEntity().getId().toString().equals(taskEntity.getTeamEntity().getId().toString())) {
             return taskEntity.setUserEntity(userEntity);
         }
         throw new WrongInputException("Task and User do not belong to the same Team");

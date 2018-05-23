@@ -26,10 +26,10 @@ public final class IssueEntity extends AbstractEntity<IssueEntity> {
         this.taskEntity = null;
     }
 
-    private IssueEntity(UUID id, boolean active, String description) {
+    private IssueEntity(UUID id, boolean active, String description, TaskEntity taskEntity) {
         super(id, active);
         this.description = description;
-        this.taskEntity = null;
+        this.taskEntity = taskEntity;
     }
 
     private IssueEntity(UUID id, String description, TaskEntity taskEntity) {
@@ -52,6 +52,6 @@ public final class IssueEntity extends AbstractEntity<IssueEntity> {
 
     @Override
     public IssueEntity deactivate() {
-        return new IssueEntity(getId(), false, description);
+        return new IssueEntity(getId(), false, description, taskEntity);
     }
 }

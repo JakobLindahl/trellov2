@@ -102,15 +102,15 @@ public final class TeamResource {
 
     @GET
     @Path("{teamId}/issues")
-    public Page<Issue> getAllTasksByPage(@PathParam("teamId") UUID teamId, @BeanParam PagingInput pagingInput) {
+    public Page<Issue> getAllIssuesByTeam(@PathParam("teamId") UUID teamId, @BeanParam PagingInput pagingInput) {
         return issueService.getPage(teamId, pagingInput);
     }
 
     @GET
     @Path("{teamId}/tasks")
-    public Page<Task> getByTeamAsPage(@PathParam("teamId") UUID teamId,
-                                      @BeanParam PagingInput pagingInput,
-                                      @BeanParam TaskInput taskInput) {
+    public Page<Task> getAllTasksByTeam(@PathParam("teamId") UUID teamId,
+                                        @BeanParam PagingInput pagingInput,
+                                        @BeanParam TaskInput taskInput) {
         return taskService.getByTeamAsPage(teamId, pagingInput, taskInput);
     }
 
@@ -155,7 +155,7 @@ public final class TeamResource {
         return uriInfo.getAbsolutePathBuilder().path(entity.getId().toString()).build();
     }
 
-    private void notify(Team team, String message){
+    private void notify(Team team, String message) {
         getBroadcaster(team).broadcast(sse.newEvent(message));
     }
 }

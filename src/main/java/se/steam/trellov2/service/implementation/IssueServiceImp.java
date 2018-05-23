@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.Issue;
 import se.steam.trellov2.repository.IssueRepository;
+import se.steam.trellov2.repository.TaskRepository;
 import se.steam.trellov2.repository.model.parse.ModelParser;
 import se.steam.trellov2.resource.parameter.PagingInput;
 import se.steam.trellov2.service.IssueService;
@@ -16,19 +17,20 @@ import java.util.UUID;
 final class IssueServiceImp implements IssueService {
 
     private final IssueRepository issueRepository;
+    private final TaskRepository taskRepository;
     private final Logic logic;
 
-    private IssueServiceImp(IssueRepository issueRepository, Logic logic) {
+    private IssueServiceImp(IssueRepository issueRepository, TaskRepository taskRepository, Logic logic) {
         this.issueRepository = issueRepository;
+        this.taskRepository = taskRepository;
         this.logic = logic;
     }
 
     @Override
     public Issue save(UUID taskId, Issue issue) {
-        return ModelParser.fromIssueEntity(
-                issueRepository.save(ModelParser.toIssueEntity(issue.assignId())
-                        .setTaskEnitity(logic.checkIfDone(logic.validateTask(taskId)).dropTask())));
-
+        return ModelParser.fromIssueEntity(issueRepository.save(
+                ModelParser.toIssueEntity(issue.assignId()).setTaskEnitity(
+                        taskRepository.save(logic.validateTask(taskId).dropTask()))));
     }
 
     @Override
@@ -39,12 +41,12 @@ final class IssueServiceImp implements IssueService {
 
     @Override
     public void delete(UUID issueId) {
-        issueRepository.delete(logic.validateIssue(issueId));
+        issueRepository.save(logic.validateIssue(issueId).deactivate());
     }
 
     @Override
     public Page<Issue> getPage(UUID teamId, PagingInput pagingInput) {
-        return issueRepository.findByTaskEntityTeamEntity(logic.validateTeam(teamId), PageRequest.of(pagingInput.getPage(), pagingInput.getSize()))
+        return issueRepository.findByTaskEntityTeamEntityAndActive(logic.validateTeam(teamId), true, PageRequest.of(pagingInput.getPage(), pagingInput.getSize()))
                 .map(ModelParser::fromIssueEntity);
     }
 
