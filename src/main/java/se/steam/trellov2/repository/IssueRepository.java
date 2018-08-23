@@ -8,6 +8,7 @@ import se.steam.trellov2.repository.model.IssueEntity;
 import se.steam.trellov2.repository.model.TaskEntity;
 import se.steam.trellov2.repository.model.TeamEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository

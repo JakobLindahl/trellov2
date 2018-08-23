@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
-import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.TaskEntity;
 import se.steam.trellov2.repository.model.UserEntity;
@@ -27,13 +26,11 @@ import static se.steam.trellov2.repository.model.parse.ModelParser.toUserEntity;
 final class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
-    private final TeamRepository teamRepository;
     private final TaskRepository taskRepository;
     private final Logic logic;
 
-    private UserServiceImp(UserRepository userRepository, TeamRepository teamRepository, TaskRepository taskRepository, Logic logic) {
+    private UserServiceImp(UserRepository userRepository, TaskRepository taskRepository, Logic logic) {
         this.userRepository = userRepository;
-        this.teamRepository = teamRepository;
         this.taskRepository = taskRepository;
         this.logic = logic;
     }
