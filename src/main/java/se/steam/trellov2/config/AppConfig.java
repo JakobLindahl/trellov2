@@ -17,7 +17,6 @@ import se.steam.trellov2.resource.TeamResource;
 import se.steam.trellov2.resource.UserResource;
 import se.steam.trellov2.resource.filter.SecurityFilter;
 import se.steam.trellov2.resource.mapper.*;
-import se.steam.trellov2.service.exception.DataNotFoundException;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
