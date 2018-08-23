@@ -15,7 +15,7 @@ public final class IssueEntity extends AbstractEntity<IssueEntity> {
     @JoinColumn(name = "Task", nullable = false)
     private final TaskEntity taskEntity;
 
-    IssueEntity() {
+    protected IssueEntity() {
         this.taskEntity = null;
         this.description = null;
     }
