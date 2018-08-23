@@ -24,6 +24,10 @@ public class TeamServiceTest {
     @Test
     public void remove() {
         //TU03 inactivation of valid team
+        /*
+            testing function by creating a new team and inactivating it and then
+            catching an exception thats thrown if object is set as inactive.
+         */
         boolean thrown = false;
         Team t = teamService.save(new Team("testing"));
         teamService.remove(t.getId());
@@ -38,6 +42,10 @@ public class TeamServiceTest {
     @Test
     public void addUserToTeam() {
         //TU07 add valid user to valid team
+        /*
+            testing function by creating a new team and a new user, adding the user to a team and then
+            fetching the teams users to compare it with the newly added member.
+         */
         Team t = teamService.save(new Team("addUserTest"));
         User u = userService.save(new User("12345testing", "12345testing", "12345testing"));
 
