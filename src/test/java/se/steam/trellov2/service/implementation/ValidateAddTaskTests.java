@@ -1,4 +1,4 @@
-package se.steam.trellov2.resource;
+package se.steam.trellov2.service.implementation;
 
 import org.junit.After;
 import org.junit.Before;

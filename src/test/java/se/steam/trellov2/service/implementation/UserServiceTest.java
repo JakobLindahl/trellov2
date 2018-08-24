@@ -1,4 +1,4 @@
-package se.steam.trellov2.resource;
+package se.steam.trellov2.service.implementation;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class UserResourceTest extends Trellov2ApplicationTests {
+public class UserServiceTest extends Trellov2ApplicationTests {
 
     @Autowired
     private UserService userService;
