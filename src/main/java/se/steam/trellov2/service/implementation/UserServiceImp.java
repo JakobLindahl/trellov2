@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import se.steam.trellov2.model.User;
 import se.steam.trellov2.repository.TaskRepository;
-import se.steam.trellov2.repository.TeamRepository;
 import se.steam.trellov2.repository.UserRepository;
 import se.steam.trellov2.repository.model.TaskEntity;
 import se.steam.trellov2.repository.model.UserEntity;
