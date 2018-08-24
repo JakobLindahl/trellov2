@@ -3,7 +3,7 @@ package se.steam.trellov2.resource.parameter;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 
-public class PagingInput {
+public final class PagingInput {
 
     @QueryParam("page")
     @DefaultValue("0")
