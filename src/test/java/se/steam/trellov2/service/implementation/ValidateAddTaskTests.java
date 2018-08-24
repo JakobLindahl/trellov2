@@ -70,7 +70,7 @@ public class ValidateAddTaskTests{
         the thrown get true in the catch when it didn't work, it will be a successful.
     */
     @Test
-    public void addTaskToUserOnDiffrentTeam() {
+    public void addTaskToUserOnDifferentTeam() {
         boolean thrown = false;
         try{
             userService.addTaskToUser(user.getId(), task2.getId());

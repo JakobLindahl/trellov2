@@ -26,11 +26,20 @@ final class IssueServiceImp implements IssueService {
         this.logic = logic;
     }
 
+
+    /**
+     * @param taskId
+     * @param issue
+     * @return Issue
+     *
+     * WARNING THIS FAILS
+     *
+     */
     @Override
     public Issue save(UUID taskId, Issue issue) {
         return ModelParser.fromIssueEntity(issueRepository.save(
                 ModelParser.toIssueEntity(issue.assignId()).setTaskEnitity(
-                        taskRepository.save(logic.validateTask(taskId).dropTask()))));
+                        taskRepository.save(logic.failValidateTask(taskId).dropTask()))));
     }
 
     @Override
